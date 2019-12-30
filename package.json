@@ -4,12 +4,6 @@
   "description": "My delightful Nuxt.js project",
   "author": "yi@wuhuhai.com",
   "private": true,
-  "config": {
-    "nuxt": {
-      "host": "0.0.0.0",
-      "port": "3000"
-    }
-  },
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
     "deploy": "npm run build && npm run start",
