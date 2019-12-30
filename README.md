@@ -1,24 +1,18 @@
-# vue-blog (http://jkchao.cn)
+# [vue-nuxt-blog](http://yi.wuhuhai.com) <-左边是访问地址
 
-[![Build Status](https://travis-ci.org/jkchao/blog-front.svg?branch=v2.0)](https://travis-ci.org/jkchao/blog-front)
+项目来源: [三毛，vue-blog](https://github.com/jkchao/vue-blog)
 
-CLIENT: [vue-blog](https://github.com/jkchao/vue-blog)
+此项目只有模板了，而且模板也做了修改。
 
-ADMIN: [vue-admin](https://github.com/jkchao/vue-admin)
+后台接口来使用Java版本，Spring Cloud编写，后端接口为 RESTFul 版的接口，
 
-SERVICE: [node-koa](https://github.com/jkchao/node-koa)
+使用说明：
+1. clone 后使用，npm run dev启动项目。
+2. 原项目没有做目录重写,所以无法在本地看到项目。本项目解决转发问题
 
-**注意**：此项目的后端接口为 RESTFul 版的接口，你可以 clone [blog-service](https://github.com/jkchao/blog-service/tree/master) master 分之，来启动此项目。
+重写的地方
 
----
 
-![](https://static.jkchao.cn/f3.png)
-
-![](https://static.jkchao.cnf1.png)
-
-![](https://static.jkchao.cnf4.png)
-
-![](https://static.jkchao.cnf2.png)
 
 
 
