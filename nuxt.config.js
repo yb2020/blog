@@ -1,9 +1,15 @@
 // const pkg = require('./package')
 
-const { CDN_PATH, IS_DEV, API_ROOT, SERVER_HOST , SERVER_PORT } = require('./config.js');
+const {
+  CDN_PATH,
+  IS_DEV,
+  API_ROOT,
+  SERVER_HOST,
+  SERVER_PORT
+} = require("./config.js");
 
 module.exports = {
-  mode: 'universal',
+  mode: "universal",
 
   server: {
     port: SERVER_PORT, // default: 3000
@@ -18,63 +24,64 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    title: 'blog made by 隔壁老易',
-    titleTemplate: '%s',
+    title: "blog made by 隔壁老易",
+    titleTemplate: "%s",
     meta: [
       {
-        charset: 'utf-8'
+        charset: "utf-8"
       },
       {
-        'http-equiv': 'cleartype',
-        content: 'on'
+        "http-equiv": "cleartype",
+        content: "on"
       },
       {
-        'http-equiv': 'Cache-Control'
+        "http-equiv": "Cache-Control"
       },
       {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1, user-scalable=no'
+        name: "viewport",
+        content: "width=device-width, initial-scale=1, user-scalable=no"
       },
       {
-        hid: 'description',
-        name: 'description',
-        content: '隔壁老易'
+        hid: "description",
+        name: "description",
+        content: "隔壁老易"
       },
       {
-        hid: 'keywords',
-        name: 'keywords',
-        content: 'Java、Spring Cloud、微服务专家、Vue、全棧架构师、运维、部署、运营、推广、房地产、金融、回味人生、感悟'
+        hid: "keywords",
+        name: "keywords",
+        content:
+          "Java、Spring Cloud、微服务专家、Vue、全棧架构师、运维、部署、运营、推广、房地产、金融、回味人生、感悟"
       },
       {
-        name: 'author',
-        content: 'http://yi.wuhuhai.com/aboutMe'
+        name: "author",
+        content: "http://yi.wuhuhai.com/aboutMe"
       }
     ],
 
     link: [
       {
-        rel: 'icon',
-        type: 'image/x-icon',
-        href: '/favicon.ico'
+        rel: "icon",
+        type: "image/x-icon",
+        href: "/favicon.ico"
       },
       {
-        rel: 'dns-prefetch',
-        href: '//www.google-analytics.com'
+        rel: "dns-prefetch",
+        href: "//www.google-analytics.com"
       }
     ],
     script: [
       {
-        async: 'async',
-        type: 'text/javascript',
-        src: 'https://static.jkchao.cn/intersection-polyfill.js'
+        async: "async",
+        type: "text/javascript",
+        src: "https://static.jkchao.cn/intersection-polyfill.js"
       },
       {
-        async: 'async',
-        type: 'text/javascript',
-        src: '//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
+        async: "async",
+        type: "text/javascript",
+        src: "//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
       },
       {
-        type: 'text/javascript',
+        type: "text/javascript",
         innerHTML: `
           (adsbygoogle = window.adsbygoogle || []).push({
             google_ad_client: "ca-pub-8918100374180146",
@@ -85,17 +92,17 @@ module.exports = {
     ],
     noscript: [
       {
-        innerHTML: 'This website requires JavaScript.'
+        innerHTML: "This website requires JavaScript."
       }
     ],
-    __dangerouslyDisableSanitizers: ['script']
+    __dangerouslyDisableSanitizers: ["script"]
   },
 
   /*
    ** Customize the progress-bar color
    */
   loading: {
-    color: '#20A0FF'
+    color: "#20A0FF"
   },
 
   /*
@@ -103,10 +110,10 @@ module.exports = {
    */
   css: [
     {
-      src: './assets/scss/index.scss',
-      lang: 'sass'
+      src: "./assets/scss/index.scss",
+      lang: "sass"
     },
-    'highlight.js/styles/github.css'
+    "highlight.js/styles/github.css"
   ],
 
   /*
@@ -114,48 +121,48 @@ module.exports = {
    */
   plugins: [
     {
-      src: '~/plugins/marked.js'
+      src: "~/plugins/marked.js"
     },
     {
-      src: '~/plugins/highlight.js'
+      src: "~/plugins/highlight.js"
     },
     {
-      src: '~/plugins/gravatar.js'
+      src: "~/plugins/gravatar.js"
     },
     {
-      src: '~/plugins/clickOutside.js',
+      src: "~/plugins/clickOutside.js",
       ssr: false
     },
     {
-      src: '~/plugins/progress-image.js',
+      src: "~/plugins/progress-image.js",
       ssr: false
     },
     {
-      src: '~/plugins/ga.js',
+      src: "~/plugins/ga.js",
       ssr: false
     },
     {
-      src: '~/plugins/copy.js',
+      src: "~/plugins/copy.js",
       ssr: false
     },
     {
-      src: '~/plugins/baidu-seo-push.js',
+      src: "~/plugins/baidu-seo-push.js",
       ssr: false
     },
     {
-      src:'~/plugins/loading', 
-      ssr:false 
+      src: "~/plugins/loading",
+      ssr: false
     },
     {
-      src: '~/plugins/filter.js'
+      src: "~/plugins/filter.js"
     },
     {
-      src: '~/plugins/finally.js'
+      src: "~/plugins/finally.js"
     }
   ],
   router: {
-    middleware: ['layout'],
-    linkActiveClass: 'link-active'
+    middleware: ["layout"],
+    linkActiveClass: "link-active"
   },
 
   /*
@@ -163,12 +170,12 @@ module.exports = {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/pwa',
-    '@nuxtjs/style-resources',
-    "@nuxtjs/axios", 
+    "@nuxtjs/pwa",
+    "@nuxtjs/style-resources",
+    "@nuxtjs/axios",
     "@nuxtjs/proxy",
     [
-      '@nuxtjs/component-cache',
+      "@nuxtjs/component-cache",
       {
         max: 10000,
         maxAge: 1000 * 60 * 60
@@ -176,7 +183,7 @@ module.exports = {
     ]
   ],
   styleResources: {
-    scss: ['./assets/scss/variable.scss', './assets/scss/mixin.scss']
+    scss: ["./assets/scss/variable.scss", "./assets/scss/mixin.scss"]
   },
   axios: {
     retry: { retries: 3 },
@@ -186,12 +193,12 @@ module.exports = {
     proxy: true
   },
   proxy: [
-      [
-        '/api', 
-        { 
-          target: API_ROOT, // api主机
-          pathRewrite: { '^/api' : '/' }
-        }
+    [
+      "/api",
+      {
+        target: API_ROOT, // api主机
+        pathRewrite: { "^/api": "/" }
+      }
     ]
   ],
 
@@ -202,15 +209,20 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    publicPath: IS_DEV ? '' : CDN_PATH,
+    //publicPath: IS_DEV ? '' : CDN_PATH,
     // extractCSS: true,
     extend(config, ctx) {
       // ..
     },
-    vendor:['axios'],
+    vendor: ["axios"],
     babel: {
       presets({ isServer }) {
-        return [['@nuxtjs/babel-preset-app', { targets: isServer ? { node: '10.4.0' } : { chrome: 69 } }]];
+        return [
+          [
+            "@nuxtjs/babel-preset-app",
+            { targets: isServer ? { node: "10.4.0" } : { chrome: 69 } }
+          ]
+        ];
       }
     }
   }

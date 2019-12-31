@@ -22,6 +22,7 @@
       <div class="editor-box">
         <div class="user">
           <div class="gravatar" v-if="!mobileLayout">
+
             <img :alt="user.name || '匿名用户'"
                  :src="user.gravatar || '/images/user.png'">
           </div>
