@@ -11,6 +11,7 @@
           <i class="iconfont icon-user"></i>
           <span class="list-content">{{`${user.name}，性别：${user.sex}，年龄：${user.age}`}}</span></span>
         </div>
+        <!-- 
         <div class="list">
           <i class="iconfont icon-comments"></i>
           <span class="list-content icons">
@@ -18,10 +19,17 @@
             <a :href="getContactMeUrl(`juejin`)" target="_blank"><i class="iconfont icon-juejin"></i></a>
             <a :href="getContactMeUrl(`weibo`)" target="_blank"><i class="iconfont icon-weibo"></i></a>
             <a :href="getContactMeUrl(`segmentfault`)" target="_blank"><i class="iconfont icon-sf"></i></a>
-            <!-- <a href="" target="_blank"><i class="iconfont icon-stackoverflow"></i></a> -->
-            <!-- <a href="" target="_blank"><i class="iconfont icon-twitter"></i></a> -->
+            <a href="" target="_blank"><i class="iconfont icon-stackoverflow"></i></a> -->
+            <!-- <a href="" target="_blank"><i class="iconfont icon-twitter"></i></a>
             <a :href="getContactMeUrl(`zhihu`)" target="_blank"><i class="iconfont icon-zhihu"></i></a>
             <a :href="`mailto:${getContactMeUrl(`email`)}`"><i class="iconfont icon-email"></i></a>
+          </span>
+        </div> -->
+        <div class="list">
+          <i>声明：以下都可以联系到我，但是不保证会回！也不保证更新！本博客最先更新，本页面下的评论是最快的联系方式！</i>
+          <span class="list-content icons">
+            <a :href="getContactMeUrl(`email`)" target="_blank"><i class="iconfont">我的email</i></a>
+            <a :href="getContactMeUrl(`weibo`)" target="_blank"><i class="iconfont">weibo</i></a>
           </span>
         </div>
         <div class="list">
@@ -29,6 +37,11 @@
           <span class="list-content icons">
             <a :href="getContactMeUrl(`csdn`)" target="_blank"><i class="iconfont">CSDN</i></a>
             <a :href="getContactMeUrl(`cnblog`)" target="_blank"><i class="iconfont">博客园</i></a>
+            <a :href="getContactMeUrl(`juejin`)" target="_blank"><i class="iconfont">掘金</i></a>
+            <a :href="getContactMeUrl(`segmentfault`)" target="_blank"><i class="iconfont">segmentfault</i></a>
+            <a :href="getContactMeUrl(`zhihu`)" target="_blank"><i class="iconfont">知乎</i></a>
+            <a :href="getContactMeUrl(`toutiao`)" target="_blank"><i class="iconfont">今日头条</i></a>
+            <a :href="getContactMeUrl(`baijia`)" target="_blank"><i class="iconfont">百家</i></a>
           </span>
         </div>
         <div class="list">
