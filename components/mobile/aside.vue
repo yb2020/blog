@@ -94,7 +94,7 @@ export default {
   height: 100%;
 
   >.user-head {
-    padding: 2rem 1rem 1rem 1rem;
+    padding: 1.5rem 1rem 1rem 1rem;
     text-align: center;
 
     >img {
@@ -103,7 +103,7 @@ export default {
     }
 
     >p {
-      margin-top: $normal-pad;
+      margin-top: $sm-pad;
       color: $black;
       font-size: 1.6rem;
     }
@@ -113,7 +113,7 @@ export default {
       display: block;
       //margin-top: 2rem;
       text-align: center;
-      line-height: 2rem;
+      line-height: 1.5rem;
       color: $black;
       cursor: pointer;
 
