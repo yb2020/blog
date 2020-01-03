@@ -31,7 +31,7 @@
     <div class="item">
       <div class="info">
         <div>版权信息：
-          <a href="https://creativecommons.org/licenses/by-nc/3.0/cn/deed.zh"
+          <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/"
              target="_blank">非商用-署名-自由转载</a>
         </div>
         <div class="info-left">

@@ -9,7 +9,7 @@
       <div class="info ">
         <div class="list">
           <i class="iconfont icon-user"></i>
-          <span class="list-content">{{`${user.name}，性别：${user.sex}，年龄：${user.age}`}}</span></span>
+          <span class="list-content">{{`${user.name}，性别：${user.sex}，年龄：${user.age}`}}</span>
         </div>
         <!-- 
         <div class="list">
@@ -25,23 +25,25 @@
             <a :href="`mailto:${getContactMeUrl(`email`)}`"><i class="iconfont icon-email"></i></a>
           </span>
         </div> -->
+
         <div class="list">
-          <i>声明：以下都可以联系到我，但是不保证会回！也不保证更新！本博客最先更新，本页面下的评论是最快的联系方式！</i>
+          <i>联系方式：</i>
           <span class="list-content icons">
-            <a :href="getContactMeUrl(`email`)" target="_blank"><i class="iconfont">我的email</i></a>
-            <a :href="getContactMeUrl(`weibo`)" target="_blank"><i class="iconfont">weibo</i></a>
+            <a :href="`mailto:${getContactMeUrl('email')}`" target="_blank"><i class="iconfont">email</i></a>
+            <a :href="getContactMeUrl(`weibo`)" target="_blank"><i class="iconfont">微博</i></a>
           </span>
         </div>
+
         <div class="list">
           <i>站点文章：</i>
           <span class="list-content icons">
+            <a :href="getContactMeUrl(`toutiao`)" target="_blank"><i class="iconfont">今日头条</i></a>
+            <a :href="getContactMeUrl(`baijia`)" target="_blank"><i class="iconfont">百家</i></a>
             <a :href="getContactMeUrl(`csdn`)" target="_blank"><i class="iconfont">CSDN</i></a>
             <a :href="getContactMeUrl(`cnblog`)" target="_blank"><i class="iconfont">博客园</i></a>
             <a :href="getContactMeUrl(`juejin`)" target="_blank"><i class="iconfont">掘金</i></a>
             <a :href="getContactMeUrl(`segmentfault`)" target="_blank"><i class="iconfont">segmentfault</i></a>
             <a :href="getContactMeUrl(`zhihu`)" target="_blank"><i class="iconfont">知乎</i></a>
-            <a :href="getContactMeUrl(`toutiao`)" target="_blank"><i class="iconfont">今日头条</i></a>
-            <a :href="getContactMeUrl(`baijia`)" target="_blank"><i class="iconfont">百家</i></a>
           </span>
         </div>
         <div class="list">
@@ -50,6 +52,16 @@
             <a :href="getContactMeUrl(`iqiyi`)" target="_blank"><i class="iconfont">爱奇艺</i></a>
             <a :href="getContactMeUrl(`bilibili`)" target="_blank"><i class="iconfont">哔哩哔哩</i></a>
           </span>
+        </div>
+
+        <div class="list">
+          <i>声明：本博客和微信公众号保持更新</i>
+        </div>
+        <div class="list">
+          <i>以上渠道不保证同步更新</i>
+        </div>
+        <div class="list">
+          <i>本页面下方评论是最快的联系方式</i>
         </div>
       </div>
 
@@ -90,7 +102,7 @@
       <span class="line"></span>
     </p>
     <div class="last">
-      <p>对了，你可以在下方评论，申请友请链接，称呼 + 网址 。</p>
+      <p>对了，你可以在下方评论，申请友情链接，称呼 + 网址 。</p>
     </div>
 
     <div class="comment">
@@ -325,8 +337,8 @@ export default {
         display: flex;
         margin: .5rem;
         padding: 0 1.5rem;
-        height: 36px;
-        line-height: 36px;
+        height: 1.5rem;
+        line-height: 1.5rem;
 
         i {
           color: $dividers;

@@ -47,15 +47,15 @@ export default {
     },
 
     haveMoreArt () {
-      return this.$store.state.article.art.pagination.current_page < this.$store.state.article.art.pagination.total_page
+      return this.$store.state.article.art.pagination.currentPage < this.$store.state.article.art.pagination.totals
     },
 
     currentPage() {
-      return this.$store.state.article.art.pagination.current_page
+      return this.$store.state.article.art.pagination.currentPage
     },
 
     havePreArt () {
-      return this.$store.state.article.art.pagination.current_page !== 1
+      return this.$store.state.article.art.pagination.currentPage !== 1
     }
   },
 

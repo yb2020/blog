@@ -1,7 +1,7 @@
 // const pkg = require('./package')
 
 const {
-  CDN_PATH,
+  //CDN_PATH,
   IS_DEV,
   API_ROOT,
   SERVER_HOST,
@@ -59,36 +59,42 @@ module.exports = {
     ],
 
     link: [
-      {
-        rel: "icon",
-        type: "image/x-icon",
-        href: "/favicon.ico"
-      },
-      {
-        rel: "dns-prefetch",
-        href: "//www.google-analytics.com"
-      }
+      // {
+      //   rel: "icon",
+      //   type: "image/x-icon",
+      //   href: "/favicon.ico"
+      // },
+      // {
+      //   rel: "dns-prefetch",
+      //   href: "//www.google-analytics.com"
+      // }
     ],
     script: [
       {
         async: "async",
         type: "text/javascript",
-        src: "https://static.jkchao.cn/intersection-polyfill.js"
-      },
-      {
-        async: "async",
-        type: "text/javascript",
-        src: "//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-      },
-      {
-        type: "text/javascript",
-        innerHTML: `
-          (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client: "ca-pub-8918100374180146",
-            enable_page_level_ads: true
-          });
-        `
+        src:
+          "https://hm.baidu.com/hm.js?a68f455cb2c42a50d9ad4b744d4333f8" /*引入百度统计的js*/
       }
+      // {
+      //   async: "async",
+      //   type: "text/javascript",
+      //   src: "https://static.jkchao.cn/intersection-polyfill.js"
+      // },
+      // {
+      //   async: "async",
+      //   type: "text/javascript",
+      //   src: "//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+      // },
+      // {
+      //   type: "text/javascript",
+      //   innerHTML: `
+      //     (adsbygoogle = window.adsbygoogle || []).push({
+      //       google_ad_client: "ca-pub-8918100374180146",
+      //       enable_page_level_ads: true
+      //     });
+      //   `
+      // }
     ],
     noscript: [
       {
@@ -138,9 +144,14 @@ module.exports = {
       ssr: false
     },
     {
-      src: "~/plugins/ga.js",
+      src: "~/plugins/baidu.js",
       ssr: false
     },
+
+    // {
+    //   src: "~/plugins/ga.js",
+    //   ssr: false
+    // },
     {
       src: "~/plugins/copy.js",
       ssr: false
@@ -210,6 +221,7 @@ module.exports = {
      ** You can extend webpack config here
      */
     //publicPath: IS_DEV ? '' : CDN_PATH,
+    publicPath: "",
     // extractCSS: true,
     extend(config, ctx) {
       // ..
