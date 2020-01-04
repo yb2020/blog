@@ -96,7 +96,8 @@ export default {
       // 打开新窗口
       const win = window.open(url, winName, params)
       // 新窗口获得焦点
-      win.focus ()
+      if(win)
+        win.focus ()
     }
   }
 }

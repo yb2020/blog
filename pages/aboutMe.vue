@@ -221,15 +221,15 @@ export default {
     },
 
     share() {
-      return JSON.parse(this.user.myShare)
+      return this.user.myShare ? JSON.parse(this.user.myShare) : ''
     },
 
     contactMe() {
-      return JSON.parse(this.user.contactMe)
+      return this.user.contactMe ? JSON.parse(this.user.contactMe) : ''
     },
 
     appreciateCode() {
-      return JSON.parse(this.user.appreciateCode)
+      return this.user.appreciateCode ? JSON.parse(this.user.appreciateCode) : ''
     },
 
     user () {

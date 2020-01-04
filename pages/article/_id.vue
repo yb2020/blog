@@ -746,7 +746,7 @@ export default {
   >aside {
     position: fixed;
     right: 0;
-    bottom: 16.8rem;
+    bottom: 17rem;
 
     > div {
       position: relative;

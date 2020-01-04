@@ -23,12 +23,12 @@
           <li
             class="sitemap-list"
             v-for="item in monthData"
-            :key="item.url">
+            :key="item.url" :title="`阅读次数:${item.readCount}`">
             <article>
               <time>
                 {{ item.publishDate | dateFormat('MM-dd') }}
               </time>
-              <nuxt-link :to="`/article/${item.url}`" :title="item.title">
+              <nuxt-link :to="`/article/${item.url}`" :title="item.summary">
                 {{ item.title }}
               </nuxt-link>
 
@@ -145,21 +145,22 @@ export default {
 
   filters: {
     monthFilter (val) {
-      val = parseInt(val)
-      switch (val) {
-        case 1: return 'January'
-        case 2: return 'February'
-        case 3: return 'March'
-        case 4: return 'April'
-        case 5: return 'May'
-        case 6: return 'June'
-        case 7: return 'July'
-        case 8: return 'August'
-        case 9: return 'September'
-        case 10: return 'October'
-        case 11: return 'November'
-        case 12: return 'December'
-      }
+    //   val = parseInt(val)
+    //   switch (val) {
+    //     case 1: return 'January'
+    //     case 2: return 'February'
+    //     case 3: return 'March'
+    //     case 4: return 'April'
+    //     case 5: return 'May'
+    //     case 6: return 'June'
+    //     case 7: return 'July'
+    //     case 8: return 'August'
+    //     case 9: return 'September'
+    //     case 10: return 'October'
+    //     case 11: return 'November'
+    //     case 12: return 'December'
+    //   }
+      return val
     }
   },
 

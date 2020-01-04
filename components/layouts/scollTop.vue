@@ -23,6 +23,10 @@
     <a class="scoll-btn" @click="scrollTop" v-if="showScroll" key="1">
       <i class="iconfont icon-arrow-up"></i>
     </a>
+    <div v-if="user.wxPublicAccount" class="wxPublicAccountQr" key="wxPublicAccountQr">
+      <img :src="option.staticDomain + user.wxPublicAccount" />
+      <p>扫码关注”{{user.name}}“</p>
+    </div>
   </transition-group>
 </template>
 
@@ -40,7 +44,16 @@ export default {
   computed: {
     mobileLayout () {
       return this.$store.state.options.mobileLayout
-    }
+    },
+
+    user () {
+      return this.$store.state.options.adminInfo
+    },
+
+    option () {
+      return this.$store.state.options.option
+    },
+
   },
 
   methods: {
@@ -104,13 +117,15 @@ export default {
 .scoll-aside {
   position: fixed;
   right: 0;
-  bottom: 8rem;
+  bottom: 2rem;
 
   >.scoll-btn {
     display: block;
     width: $xlg-pad;
     height: $xlg-pad;
-    margin-bottom: .5rem;
+    right: 0;
+    position: fixed;
+    bottom: 11.5rem;
     color: #5ab95c;
     background: $module-bg;
     text-align: center;
@@ -121,7 +136,9 @@ export default {
 
     &.theme {
       color: $black;
-
+      position: fixed;
+      right: 0;
+      bottom: 14.2rem;
 
       i {
         font-size: $font-size-large;
@@ -130,6 +147,19 @@ export default {
 
     &.email {
       color: #d9544e
+    }
+  }
+
+  >.wxPublicAccountQr {
+
+    img {
+      width: 8rem;
+      height: 8rem;
+    }
+    p {
+      padding-top: .4rem;
+      text-align: center;
+      font-size: .8rem ;
     }
   }
 
@@ -143,6 +173,11 @@ export default {
       height: 2rem;
       line-height: 2rem;
     }
+    
+    >.wxPublicAccountQr {
+      display: none;
+    }
+
   }
 }
 </style>

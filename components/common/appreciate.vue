@@ -14,6 +14,16 @@
         <p>{{getAppreciateCodeName('zhifubao')}}</p>
       </div>
     </div>
+    <p v-if="user.wxPublicAccount && mobileLayout" class="title more tools" :class="{'title-mobile': mobileLayout}">
+      <span class="title-name name">微信公众号</span>
+      <span class="line"></span>
+    </p>
+    <div v-if="user.wxPublicAccount && mobileLayout" class="appreciate">
+      <div class="appreciate-item">
+        <img :src="`${option.staticDomain}${user.wxPublicAccount}`" alt="" :width="mobileLayout ? 160 : 200">
+        <p>扫码关注”{{user.name}}“</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -40,7 +50,7 @@ export default {
 
   computed: {
     appreciateCode() {
-      return JSON.parse(this.user.appreciateCode)
+      return this.user.appreciateCode ? JSON.parse(this.user.appreciateCode) : ''
     },
     option () {
       return this.$store.state.options.option
