@@ -36,6 +36,46 @@ export default {
   head() {
     return {
       title: `${this.tag.name}-标签-${this.option.title}`,
+      meta: [
+        {
+          hid: 'keywords',
+          name: 'keywords',
+          content: this.keywords
+        },
+        {
+          hid: 'og:title',
+          name: 'og:title',
+          content: `${this.tag.name}-标签-${this.option.title}`
+        },
+        {
+          hid: 'og:type',
+          name: 'og:type',
+          content: 'app'
+        },
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.option.description
+        },
+        {
+          hid: 'og:description',
+          name: 'og:description',
+          content: this.option.description
+        },
+        {
+          hid: 'content',
+          name: 'content',
+          content: this.option.content
+        },
+        {
+          name: 'Copyright',
+          content: this.option.author + "版权所有"
+        },
+        {
+          name: 'author',
+          content: this.option.author
+        }
+      ],
       link: [
         {
           hid: 'shortcut icon',
