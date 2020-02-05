@@ -1,6 +1,6 @@
 const IS_DEV = process.env.NODE_ENV !== "production";
 
-const API_ROOT = IS_DEV ? "http://localhost:9999/" : "http://api.wuhuhai.com";
+const API_ROOT = IS_DEV ? "http://localhost:9999/" : "https://api.wuhuhai.com";
 
 const STATIC_PATH = "http://static.yi.wuhuhai.com";
 
