@@ -166,7 +166,7 @@ export default {
         {
           hid: 'og:title',
           name: 'og:title',
-          content: this.article.title  + "，作者：" + this.article.author + "，版权：" + this.option.title
+          content: this.article.title  + "_" + this.article.author
         },
         {
           hid: 'og:type',
