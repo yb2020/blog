@@ -35,7 +35,7 @@ export default {
 
   head() {
     return {
-      title: `${this.tag.name}-标签-${this.option.title}`,
+      title: `${this.tag.name}_标签_${this.option.title}`,
       meta: [
         {
           hid: 'keywords',

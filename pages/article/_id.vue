@@ -156,7 +156,7 @@ export default {
 
   head() {
     return {
-      title: this.article.title + "，作者：" + this.article.author + "，版权：" + this.option.title,
+      title: this.article.title + "_" + this.article.author,
       meta: [
         {
           hid: 'keywords',

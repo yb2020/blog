@@ -27,7 +27,7 @@ export default {
 
   head() {
     return { 
-      title: `关键词搜索：${this.keywords} - ${this.option.title}`,
+      title: `关键词搜索：${this.keywords}_${this.option.title}`,
       meta: [
         {
           hid: 'keywords',

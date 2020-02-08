@@ -35,7 +35,7 @@ export default {
   
   head() {
     return {
-      title: `${this.category.name}-分类-${this.option.title}`,
+      title: `${this.category.name}_分类_${this.option.title}`,
       meta: [
         {
           hid: 'keywords',
