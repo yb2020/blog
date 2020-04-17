@@ -24,6 +24,7 @@ module.exports = {
   STATIC_PATH,
   //CDN_PATH,
   //QINIU_OPTIONS,
+  SERVER_DOMAIN,
   SERVER_HOST,
   SERVER_PORT
 };
