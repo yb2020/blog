@@ -297,7 +297,12 @@ export default {
         window.localStorage.setItem('LIKE_ARTICLS', JSON.stringify(this.likeArticles))
       }
     },
+    readDate(date) {
+      console.log(date)
+      console.log()
 
+      //return dateFormat(date, 'yyyy年MM月dd日 hh时mm分') 
+    },   
     init () {
       //window.localStorage.removeItem("LIKE_ARTICLS");
       this.likeArticles = JSON.parse(window.localStorage.getItem('LIKE_ARTICLS') || '[]')

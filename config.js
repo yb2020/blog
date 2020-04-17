@@ -6,6 +6,7 @@ const STATIC_PATH = "http://static.yi.wuhuhai.com";
 
 //const CDN_PATH = "https://cdn.jkchao.cn/nuxt";
 
+const SERVER_DOMAIN = "yi.wuhuhai.com";
 const SERVER_HOST = "0.0.0.0";
 const SERVER_PORT = 3000;
 
