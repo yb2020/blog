@@ -282,7 +282,7 @@ header {
 
     >div.nav-item {
       position: relative;
-      padding: 0 1rem;
+      padding: 0 .8rem;
       color: $disabled;
 
       >i {
