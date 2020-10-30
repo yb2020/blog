@@ -1,10 +1,12 @@
 <template>
   <div class="mobile-aside">
     <div class="user-head">
-      <img :src="`${user.avatarUrl}`" />
-      <p>{{user.name}}</p>
-
-        <p
+      <nuxt-link to="/aboutMe">
+        <img v-if="user.wxPublicAccount" :src="option.staticDomain + user.wxPublicAccount" />
+      </nuxt-link>
+      <div class="slogan">{{user.slogan}}</div>
+      <marqueeUp ref="marqueeUp" :list="followTips"></marqueeUp>
+        <!-- <p
           @click="toogleTheme"
           class="scoll-btn theme">
             <i
@@ -14,7 +16,7 @@
                 'icon-light': theme === 'dark'
               }"
             ></i>
-          </p>
+          </p> -->
     </div>
       <nav>
         <li
@@ -46,6 +48,8 @@
 </template>
 
 <script>
+import marqueeUp from "~/components/common/marqueeUp"
+
 export default {
   name: 'mobile-aside',
   data () {
@@ -53,10 +57,13 @@ export default {
       theme: 'light'
     }
   },
-
+  components: {marqueeUp},
   computed: {
     user () {
       return this.$store.state.options.adminInfo
+    },
+    followTips() {
+      return this.user.followTips ? JSON.parse(this.user.followTips) : ''
     },
     option () {
       return this.$store.state.options.option
@@ -82,6 +89,11 @@ export default {
 
   mounted () {
     this.theme = window.localStorage.getItem('THEME') || 'light'
+    this.$nextTick(()=>{
+      if(this.$refs["marqueeUp"]) {
+        this.$refs["marqueeUp"].init()
+      }
+    })
   }
 }
 </script>
@@ -94,12 +106,27 @@ export default {
   height: 100%;
 
   >.user-head {
-    padding: 1.5rem 1rem 1rem 1rem;
+    padding: 10px;
     text-align: center;
+    margin: 2rem auto 1rem auto;
+    
+    img {
+      width: 8rem ;
+      border-radius: 6px;
+    }
 
-    >img {
-      border-radius: 50%;
-      width: 8rem;
+    .slogan {
+      color: $href;
+      text-align: center;
+      font-size: 14px ;
+      padding-top: 5px ;
+      font-weight: bolder;
+    }
+
+    >div {
+      text-align: center;
+      font-size: 14px ;
+      padding-top: 5px ;
     }
 
     >p {
@@ -148,7 +175,7 @@ export default {
 
   > .aside-foot {
     position: absolute;
-    bottom: $mlg-pad;
+    bottom: $mlg-pad + 1;
     left: 50%;
     width: 100%;
     font-size: $font-size-small;

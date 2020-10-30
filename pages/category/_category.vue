@@ -1,22 +1,25 @@
 <template>
-  <div class="category">
-    <p class="title">
-      <span class="title-name"><i class="iconfont icon-category"></i> {{ category.name }} </span>
-      <span class="line"></span>
-    </p>
-    <div class="article">
-      <articleView
-        :articleList="list"
-        :haveMoreArt="false"
-        :havePreArt="false"
-        :currentPage="currentPage"
-        currentType=""></articleView>
+  <div class="categoryContainer" :class="{'mobile': mobileLayout}">
+    <div class="containerLeft">
+      <div class="categoryTitle">
+        <i class="iconfont icon-release"></i>{{ category.name }}
+      </div>
+
+      <div class="article">
+        <articleView
+          :articlePage="articlePage"
+          :haveMoreArt="false"
+          :havePreArt="false"
+          :currentPage="currentPage"
+          currentType=""></articleView>
+      </div>
     </div>
+    <rightPanel :isAll="false" />
   </div>
 </template>
 <script>
-
 import articleView from '~/components/common/article'
+import rightPanel from "~/components/layouts/rightPanel"
 
 export default {
 
@@ -26,11 +29,15 @@ export default {
 
   scrollToTop: true,
 
-  fetch ({ store, params }) {
-    return store.dispatch('article/getArtList', {
+  async fetch ({ store, params }) {
+    const categoryList = await store.dispatch('article/getArtList', {
       ...params,
-      page_size: 20
+      pageSize: 20
     })
+    const refList = await store.dispatch('article/getRefList', {
+      ...params
+    })
+    return {categoryList, refList}
   },
   
   head() {
@@ -96,7 +103,7 @@ export default {
   },
 
   components: {
-    articleView
+    articleView, rightPanel
   },
 
   computed: {
@@ -109,8 +116,8 @@ export default {
       return this.$store.state.nav.data.find(item => item.idName === idName)
     },
 
-    list () {
-      return this.$store.state.article.art.list
+    articlePage () {
+      return this.$store.state.article.art
     },
 
     option () {
@@ -126,28 +133,64 @@ export default {
 
 <style scoped lang="scss">
 
-.category > .title {
-  position: relative;
+.categoryContainer {
+  margin: 0 auto 20px;
   display: flex;
-  align-items: center;
-  padding: 0.5rem 0rem;
-  line-height: 1.5rem;
-  font-size: 1rem;
-  font-weight: normal;
+  width: $container-width;
 
-  i {
-    margin-right: .5rem;
+  .containerLeft {
+    width: $container-left-width;
+    >.categoryTitle {
+      background: #1a1a1b;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 24px;
+      font-style: italic;
+      color: #2fa7ff;
+
+      >.iconfont {
+        font-size: 24px ;
+      }
+    }
   }
 
-  > .title-name {
+  .containerRight {
+    width: $container-right-width;
+    margin-left: 20px;
+
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &.mobile {
+    width: 100%;
+    transform: translate(0);
+  }
+
+  >.title {
     position: relative;
-    padding-right: $lg-pad;
-    background: $white;
-    z-index: 99;      
-  }
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0rem;
+    line-height: 1.5rem;
+    font-size: 1rem;
+    font-weight: normal;
 
-  > .line {
-    top: 50%;
+    i {
+      margin-right: .5rem;
+    }
+
+    > .title-name {
+      position: relative;
+      padding-right: $lg-pad;
+      background: $white;
+      z-index: 99;      
+    }
+
+    > .line {
+      top: 50%;
+    }
   }
 }
 </style>

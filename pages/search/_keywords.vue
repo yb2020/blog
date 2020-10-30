@@ -1,21 +1,24 @@
 <template>
-  <div class="keywords">
+  <div class="keywordsContainer" :class="{'mobile': mobileLayout}">
+    <div class="containerLeft">
+      <div class="keywordsTitle">
+        搜索：{{ keywords }} 
+      </div>
 
-    <p class="title ">
-      <span class="title-name"><i class="iconfont icon-search"></i>{{ keywords }}</span>
-      <span class="line"></span>
-    </p>
+      <div class="article">
+        <articleView
+          :articlePage="articlePage"
+          :haveMoreArt="false"></articleView>
+      </div>
 
-    <div class="article">
-      <articleView
-        :articleList="list"
-        :haveMoreArt="false"></articleView>
     </div>
+    <rightPanel />
+
   </div>
 </template>
 <script>
-
 import articleView from '~/components/common/article'
+import rightPanel from "~/components/layouts/rightPanel"
 
 export default {
 
@@ -83,19 +86,22 @@ export default {
     }
   },
 
-  fetch ({ store, params }) {
-    return store.dispatch('article/getArtList', {
+  async fetch ({ store, params }) {
+    const categoryList = await store.dispatch('article/getArtList', {
       ...params,
-      page_size: 100
+      pageSize: 20
     })
+    const refList = await store.dispatch('article/getRefList', {
+      ...params
+    })
+    return {categoryList, refList}
   },
 
   data () {
     return {}
   },
-
   components: {
-    articleView
+    articleView,rightPanel
   },
 
   computed: {
@@ -111,37 +117,72 @@ export default {
       return this.$store.state.options.option
     },
 
-    list () {
-      return this.$store.state.article.art.list
+    articlePage () {
+      return this.$store.state.article.art
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-
-.keywords > .title {
-  position: relative;
+.keywordsContainer {
+  margin: 0 auto 20px;
   display: flex;
-  align-items: center;
-  padding: 0.5rem 0rem;
-  line-height: 1.5rem;
-  font-size: 1rem;
-  font-weight: normal;
+  width: $container-width;
 
-  i {
-    margin-right: .5rem;
+  &.mobile {
+    width: 100%;
+    transform: translate(0);
   }
 
-  > .title-name {
+  .containerLeft {
+    width: $container-left-width;
+    >.keywordsTitle {
+      background: #1a1a1b;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 24px;
+      font-style: italic;
+      color: #2fa7ff;
+      >.iconfont {
+        font-size: 24px ;
+      }
+    }
+  }
+
+  .containerRight {
+    width: $container-right-width;
+    margin-left: 20px;
+
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+
+  
+  >.title {
     position: relative;
-    padding-right: $lg-pad;
-    background: $white;
-    z-index: 99;      
-  }
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0rem;
+    line-height: 1.5rem;
+    font-size: 1rem;
+    font-weight: normal;
 
-  > .line {
-    top: 50%;
+    i {
+      margin-right: .5rem;
+    }
+
+    > .title-name {
+      position: relative;
+      padding-right: $lg-pad;
+      background: $white;
+      z-index: 99;      
+    }
+
+    > .line {
+      top: 50%;
+    }
   }
 }
 </style>

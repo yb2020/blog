@@ -296,8 +296,9 @@ export default {
 <style lang="scss" scope>
 
 .about {
-  width: $container-min-width;
+  width: $container-width;
   margin: 0 auto;
+  margin-bottom: 20px;
 
   .title {
     position: relative;

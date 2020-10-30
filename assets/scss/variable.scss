@@ -2,9 +2,13 @@
 // $cdn-path: https://static.jkchao.cn/_nuxt
 
 // container
-$container-left: 60rem;
-$container-min-width: $container-left;
-$container-width: $container-min-width;
+$container-left: 880px;
+$container-right: 300px;
+$container-all: 1200px;
+$container-width: $container-all;
+$container-left-width: $container-left;
+$container-right-width: $container-right;
+// $container-width: $container-min-width;
 $container-right: 8rem;
 
 
@@ -22,8 +26,8 @@ $black: var(--theme-black);
 $green: var(--theme-green);
 $blue: var(--theme-primary);
 $red: var(--theme-red);
-
 $red-light-1: var(--theme-red-light-1);
+$href: var(--theme-href);
 
 
 $border-color: var(--border-color);

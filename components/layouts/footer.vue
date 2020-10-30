@@ -27,23 +27,20 @@
       </p>
     </div> -->
 
-    <div class="container">
-      <p class="icp">
-        <span v-for="(nav, index) in bottomNavList" :key="index" >
-          <nuxt-link :to="nav.url" :target="nav.target" exact>{{ nav.name }}</nuxt-link>
-          <span v-if="index < bottomNavList.length - 1" class="fg">&nbsp;|&nbsp;</span>
-        </span>
-        <!--<span class="hr"></span>
-        <span>RSS</span>-->
-      </p>
-    </div>
-    <div class="container center copyright" v-if="option.beianhao">
-      备案号：<a href="http://beian.miit.gov.cn/" target="_blank">{{option.beianhao}}</a>
+    <div class="bottomNav">
+      <span v-for="(nav, index) in bottomNavList" :key="index" >
+        <nuxt-link :to="nav.url" :target="nav.target" exact>{{ nav.name }}</nuxt-link>
+        <span v-if="index < bottomNavList.length - 1" class="fg">&nbsp;|&nbsp;</span>
+      </span>
+      <!--<span class="hr"></span>
+      <span>RSS</span>-->
     </div>
     <div class="container center copyright">
       <time>Copyright ©{{new Date().getFullYear()}}</time>
-      <span class="fg">&nbsp;|&nbsp;</span>
+      <span class="fg">&nbsp;</span>
       <span v-html="copyRight()"></span>
+      <span class="fg">&nbsp;|&nbsp;</span>
+      <span v-if="option.beianhao">备案号：<a href="http://beian.miit.gov.cn/" target="_blank">{{option.beianhao}}</a></span>
     </div>
 
   </footer>
@@ -85,14 +82,15 @@ export default {
 <style scoped lang="scss">
 
 footer {
-  margin-top: $normal-pad;
-  padding: $normal-pad 0;
-  background: $white;
-  border-top: 1px solid $border-color;
+  background: #1b1b1d;
   color: $text;
   font-size: 0.8rem ;
+  padding: 10px 0px;
 
-
+  .bottomNav {
+    text-align: center;
+    padding-bottom: 10px ;
+  }
   >.container {
     display: flex;
     justify-content: flex-end;
@@ -102,9 +100,13 @@ footer {
     }
 
     &.copyright {
-      padding-top: 10px;
       &.fg {
-        margin: 0px 5px;
+        margin: 
+        0px 5px;
+      }
+      /deep/ a:hover {
+        color: $href;
+        text-decoration: underline;
       }
     }
 

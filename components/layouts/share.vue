@@ -13,7 +13,7 @@
       <a title="豆瓣" rel="nofollow" class="share-link douban" @click.prevent="shareWindow(`https://www.douban.com/recommend/?url=${url}&title=${title()}`)">
         <i class="iconfont icon-douban"></i>
       </a>
-      <a title="人人网" rel="nofollow" class="share-link renren" @click.prevent="shareWindow(`http://widget.renren.com/dialog/share?resourceUrl=${url}&srcUrl=${url}&title=${title()}&description=${description()}`)">
+      <!-- <a title="人人网" rel="nofollow" class="share-link renren" @click.prevent="shareWindow(`http://widget.renren.com/dialog/share?resourceUrl=${url}&srcUrl=${url}&title=${title()}&description=${description()}`)">
         <i class="iconfont icon-renren"></i>
       </a>
       <a title="印象笔记" rel="nofollow" class="share-link evernote" @click.prevent="shareWindow(`https://www.evernote.com/clip.action?url=${url}&title=${title()}`)">
@@ -27,7 +27,7 @@
       </a>
       <a title="linkedin" rel="nofollow" class="share-link linkedin" @click.prevent="shareWindow(`http://www.linkedin.com/shareArticle?title=${title()}&summary=${description()}&mini=true&url=${url}`)">
         <i class="iconfont icon-linkedin"></i>
-      </a>
+      </a> -->
       <a title="email" rel="nofollow" class="share-link mail" @click.prevent="shareWindow(`mailto:?subject=${title()}&body=${url}`)">
         <i class="iconfont icon-email"></i>
       </a>
@@ -106,8 +106,10 @@ export default {
 <style lang="scss" scoped>
 
 #share {
+  
   .share-box {
     color: $text;
+    width: 10px;
     &.mobile {
       width: 100%;
       display: flex;
@@ -119,8 +121,8 @@ export default {
         &[class*="weibo"],
         &[class*="qzone"] {
           width: auto;
-          flex-grow: 1;
-          display: inline-block;
+          // flex-grow: 1;
+          // display: inline-block;
         }
 
         &[class*="qzone"] {
@@ -131,61 +133,61 @@ export default {
 
     >.share-link {
       cursor: pointer;
-      display: inline-block;
       text-align: center;
+      border-radius: 4px;
 
       &.wechat:hover {
-        background-color: rgb(123, 179, 46);
+        color: rgb(123, 179, 46);
       }
 
       &.weibo:hover {
-        background-color: rgb(230, 22, 45);
+        color: rgb(230, 22, 45);
       }
 
       &.qzone:hover {
-        background-color: rgb(43, 130, 217);
+        color: rgb(43, 130, 217);
       }
 
       &.douban:hover {
-        background-color: rgb(0, 119, 17);
+        color: rgb(0, 119, 17);
       }
 
       &.renren:hover {
-        background-color: rgb(0, 94, 172);
+        color: rgb(0, 94, 172);
       }
 
       &.evernote:hover {
-        background-color: rgb(139, 224, 86);
+        color: rgb(139, 224, 86);
       }
 
       &.twitter:hover {
-        background-color: rgb(85, 172, 238);
+        color: rgb(85, 172, 238);
       }
 
       &.facebook:hover {
-        background-color: rgb(59, 89, 152);
+        color: rgb(59, 89, 152);
       }
 
       &.google-plus:hover {
-        background-color: rgb(221, 75, 57);
+        color: rgb(221, 75, 57);
       }
 
       &.linkedin:hover {
-        background-color: rgb(0, 123, 181);
+        color: rgb(0, 123, 181);
       }
 
       &.mail:hover {
-        background-color: #5dc732;
+        color: #5dc732;
       }
 
       &.link:hover {
-        background-color: #e67a1c;
+        color: #e67a1c;
       }
 
       &:hover {
 
         >.iconfont {
-          color: $white;
+          // color: $white;
         }
       }
     }

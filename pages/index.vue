@@ -1,90 +1,23 @@
 <template>
-  <div class="sitemap" :class="{'mobile': mobileLayout}">
-    <ul class="tag clearfix">
-      <li class="tag-item" v-for="item in tag" :key="item.id">
-        <nuxt-link :to="`/tag/${item.idName}`">
-          {{ item.name }}
-          <span>({{ item.articleAmount }})</span>
-        </nuxt-link>
-      </li>
-    </ul>
-    
-    <h3 class="title sitemap-article">
-      <span class="line"></span>
-    </h3>
-    <div class="sitemap-article-list">
-      <div v-if="yearMap.length === 0" class="year-list">
-        暂无文章
-      </div>
-      <div v-for="(monthMap, key) in yearMap" :key="key" class="year-list">
-        <p class="year-name">{{ key }}</p>
-        <ul class="month-list" v-for="(monthData, monthKey) in monthMap" :key="monthKey">
-          <p class="month-name">{{ monthKey | monthFilter }}</p>
-          <li
-            class="sitemap-list"
-            v-for="item in monthData"
-            :key="item.url" :title="`阅读次数:${item.readCount}`">
-            <article>
-              <time>
-                {{ item.publishDate | dateFormat('MM-dd') }}
-              </time>
-              <nuxt-link :to="`/article/${item.url}`" :title="item.summary">
-                {{ item.title }}
-              </nuxt-link>
-
-              <span
-                @click="goType(item)"
-                class="tag">
-                  <i
-                    :class="{
-                      'iconfont': true,
-                      'icon-code': true,
-                      'icon-think': item.type === 2,
-                      'icon-music': item.type === 3
-                    }"></i>
-              </span>
-              <!-- item.meta.views + item.meta.comments * 10 + item.meta.likes * 3 > 1000 -->
-              <span
-                v-if="item.readCount * 3 > 1000"
-                >
-                <i class="iconfont icon-hot"></i>  
-              </span>
-
-
-            </article>
-          </li>
-        </ul>  
-      </div>
+  <div class="indexContainer" :class="{'mobile': mobileLayout}">
+    <div class="containerLeft">
+      <articleView
+          :articlePage="articlePage"
+          :haveMoreArt="false"
+          :havePreArt="false"
+          :currentPage="currentPage"
+          currentType=""></articleView>
     </div>
-
-    <!-- <ul class="sitemap-list">
-      <li
-        class="sitemap-item"
-        v-for="(item,index) in list"
-        :key="item._id">
-        <article>
-          <time>
-            {{ item.create_at | dateFormat('yyyy.MM.dd') }}
-          </time>
-          <nuxt-link :to="`/article/${item._id}`">
-            {{ item.title }}
-          </nuxt-link>
-        </article>
-      </li>
-      <li class="sitemap-item" v-if="list.length === 0">
-        暂无文章
-      </li>
-    </ul> -->
+    <rightPanel />
   </div>
 </template>
 
 <script>
-
+import articleView from '~/components/common/article'
+import rightPanel from "~/components/layouts/rightPanel"
 export default {
-  name: 'sitemap',
-
+  name: 'index',
   scrollToTop: true,
-
   transition: 'fade',
 
   head() {
@@ -144,26 +77,36 @@ export default {
       ]
     }
   },
+  data() {
+    return {
+      currentPage: 1
+    }
+  },
+  components: {
+    articleView, rightPanel
+  },
 
-  fetch ({ store }) {
-    return store.dispatch('sitemap/getSitemap', { page_size: 1000 })
+  async fetch ({ store }) {
+    const indexAll = await store.dispatch('article/getArtList', {
+      page_size: 1000
+    })
+    const refList = await store.dispatch('article/getRefList', {
+    })
+    return {indexAll, refList}
   },
 
   computed: {
     tag () {
       return this.$store.state.tag.data
     },
-
+    articlePage () {
+      return this.$store.state.article.art
+    },
     option () {
       return this.$store.state.options.option
     },
-
     mobileLayout () {
       return this.$store.state.options.mobileLayout
-    },
-
-    yearMap () {
-      return this.$store.state.sitemap.art
     }
   },
 
@@ -200,10 +143,93 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.sitemap {
-  width: $container-min-width;
-  margin: 0 auto;
+.indexContainer {
+  margin: 0 auto 20px;
+  display: flex;
+  width: $container-width;
+  
+  .containerLeft {
+    width: $container-left-width;
 
+    .item {
+      border-bottom: 2px solid #565656;
+
+      .title {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        .titleContent {
+           display: -webkit-box;
+           align-items: baseline;
+           width: 90%;
+
+          .yearLabel {
+            font-size: 78px;
+            font-style: italic;
+            color: #2d2d2f;
+            font-weight: bold;
+            width: 200px;
+          }
+          .content {
+            position: relative;
+            left: -180px;
+            top: -18px;
+            font-size: 20px;
+            font-weight: bolder;
+            z-index: 20;
+          }
+        }
+        .isTop {
+          font-size: 30px;
+          font-style: italic;
+          font-weight: bold;
+          color: #9c4419;
+          position: relative;
+          top: -10px;
+          width: 70px;
+        }
+
+      }
+      .titleBorder {
+        position: relative;
+        bottom: 24px;
+        height: 1px;
+        width: 60%;
+        background-color: #3a3b3e;
+      }
+      .coverImage {
+        position: relative;
+        top: -10px;
+        img {
+          width: 80%;
+          border-radius: 6px;
+        }
+      }
+      .summary {
+        font-size: 14px;
+        padding: 0px 10px;
+      }
+      .itemFooter {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        font-size: 12px ;
+        padding: 10px 10px 5px 10px;;
+        .category {
+          color: #acc0ff;
+        }
+        .time {
+          color: #5e5d6f;
+        }
+      }
+      a:hover {
+        color: $href;
+        text-decoration: underline;
+      }
+    }
+    
+  }
+  
   >.title {
     position: relative;
     display: flex;

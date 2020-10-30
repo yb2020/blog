@@ -21,7 +21,7 @@
         'z-index': 1
       }"
       @load="handleLoadLarge">
-    <div style="padding-bottom: 47.61%"></div>
+    <div style="padding-bottom: 40%"></div>
   </div>
 </template>
 
@@ -92,7 +92,7 @@ export default {
   background-repeat: no-repeat;
   position: relative;
   overflow: hidden;
-  margin: $lg-pad 0;
+  margin: .5rem 0;
   // padding-top: 47%;
 
   .img-placeholder {

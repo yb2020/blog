@@ -5,7 +5,7 @@
     class="scoll-aside" 
     :class="{ mobile: mobileLayout }">
     <!-- v-if="$route.path !== '/'" -->
-    <a 
+    <!-- <a 
       href="javascript:;"
       @click="toogleTheme"
       class="scoll-btn theme"
@@ -18,15 +18,11 @@
             'icon-light': theme === 'dark'
           }"
           ></i>
-      </a>
+      </a> -->
 
     <a class="scoll-btn" @click="scrollTop" v-if="showScroll" key="1">
       <i class="iconfont icon-arrow-up"></i>
     </a>
-    <div v-if="user.wxPublicAccount" class="wxPublicAccountQr" key="wxPublicAccountQr">
-      <img :src="option.staticDomain + user.wxPublicAccount" />
-      <p>扫码关注”{{user.name}}“</p>
-    </div>
   </transition-group>
 </template>
 
@@ -123,11 +119,12 @@ export default {
     display: block;
     width: $xlg-pad;
     height: $xlg-pad;
-    right: 0;
+    border-radius: 4px;
+    right: 15px;
     position: fixed;
-    bottom: 11.5rem;
-    color: #5ab95c;
-    background: $module-bg;
+    bottom: 3.5rem;
+    color: $href;
+    background: #1a1a1b;
     text-align: center;
     line-height: 2.7rem;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,.14);

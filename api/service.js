@@ -55,6 +55,17 @@ export function getArts(params) {
     .catch(err => console.error(err));
 }
 
+// 获取相关文章列表
+export function listRef(params) {
+  return serviceApi({
+    url: serviceId + "/article/listRef",
+    method: "post",
+    data: params
+  })
+    .then(res => res.data)
+    .catch(err => console.error(err));
+}
+
 // 根据随机获取获取文章列表
 export function getRandomArts(params) {
   return serviceApi({

@@ -43,7 +43,7 @@
         <my-footer v-if="!isError && !isWelcome"></my-footer>        
       </transition>
     </div>
-    <scoll-top></scoll-top>
+    <scroll-top></scroll-top>
   </div>
 </template>
 
@@ -53,7 +53,7 @@
 import myFooter from '~/components/layouts/footer'
 import myHeader from '~/components/layouts/header'
 import asideView from '~/components/layouts/aside'
-import scollTop from '~/components/layouts/scollTop'
+import scrollTop from '~/components/layouts/scrollTop'
 
 import mobileSide from '~/components/mobile/aside'
 import mobileHeader from '~/components/mobile/header'
@@ -73,7 +73,7 @@ export default {
     myHeader,
     asideView,
     mobileSide,
-    scollTop
+    scrollTop
   },
 
   computed: {
@@ -126,7 +126,7 @@ export default {
     left: 0;
     z-index: 9999;
     height: 100%;
-    width: 60%;
+    width: 70%;
     background: $white;
     @include css3-prefix('transform', 'translateX(-100%)');
     @include transition(all .3s ease-out);
@@ -149,10 +149,11 @@ export default {
 
   >.app-main {
     @include transition(all .3s ease-out);
+    margin: 0px auto;
 
     >.main-container {
-      min-height: calc(100vh - 196px);
-      margin-top: $normal-pad;
+      // min-height: calc(100vh - 196px);
+      // margin-top: $normal-pad;
     }
 
     >.main-container.mobile {
@@ -161,7 +162,7 @@ export default {
   }
 
   >.app-main.open {
-    transform: translateX(60%);
+    transform: translateX(70%);
   }
 }
 

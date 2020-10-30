@@ -2,7 +2,7 @@
  * aiticle
  */
 
-import service from '../api';
+import service from "../api";
 
 export const state = () => ({
   // 热门文章
@@ -19,7 +19,7 @@ export const state = () => ({
   },
 
   // 相关文章推荐
-  relativeList: [],
+  refList: [],
 
   // 随机文章推荐
   randomList: [],
@@ -71,9 +71,12 @@ export const mutations = {
   ADD_COMMENT(state) {
     state.details.commentCount += 1;
   },
-
-  SET_RELATIVE_ART_LIST(state, list) {
-    state.relativeList = list.filter(item => item.id !== state.details.id);
+  CLEAR_DETAIL(state) {
+    //清除详情，防止关联数据时出现错乱
+    state.details = {};
+  },
+  SET_REF_LIST(state, list) {
+    state.refList = list.filter(item => item.id !== state.details.id);
   },
   SET_RANDOM_ART_LIST(state, list) {
     state.randomList = list.filter(item => item.id !== state.details.id);
@@ -88,19 +91,19 @@ export const actions = {
       current_page: 1
     }
   ) {
-    commit('FETCH_ART');
+    commit("FETCH_ART");
     const res = await service.getArts({
       ...data,
-      page_size: data.page_size || 6
+      pageSize: data.pageSize || 6
     });
     if (res && res.status === 1) {
       if (!process.client) {
-        commit('SET_ART_SUCCESS', res.data);
+        commit("SET_ART_SUCCESS", res.data);
       } else
         setTimeout(() => {
-          commit('SET_ART_SUCCESS', res.data);
+          commit("SET_ART_SUCCESS", res.data);
         }, 200);
-    } else commit('SET_ART_FILE');
+    } else commit("SET_ART_FILE");
   },
 
   // 获取最热文章列表
@@ -109,7 +112,7 @@ export const actions = {
       hot: true
     });
     commit(
-      'SET_HOT_ART',
+      "SET_HOT_ART",
       res.result || {
         pagination: {},
         list: []
@@ -117,38 +120,42 @@ export const actions = {
     );
   },
 
+  clearArt({ commit, dispatch }, data) {
+    commit("CLEAR_DETAIL");
+  },
+
   // 文章详情
   async getArt({ commit, dispatch }, data) {
     const res = await service.getArt(data);
-    if(res && res.status === 1) {
-      commit('SET_DETAILS', res.data || {});
+    if (res && res.status === 1) {
+      commit("SET_DETAILS", res.data || {});
     }
   },
 
-  async getRelativeList({ commit, state }, data) {
-    const list = await service.getArts({
-      tag: state.details.tag[0]._id || 0,
-      current_page: 1,
-      page_size: 4
+  async getRefList({ commit, state }, data) {
+    const list = await service.listRef({
+      ...data,
+      currentPage: 1,
+      pageSize: 4
     });
-    commit('SET_RELATIVE_ART_LIST', list.result.list || []);
+
+    commit("SET_REF_LIST", list.data.list || []);
   },
 
   async getRandomList({ commit, state }, data) {
     const result = await service.getRandomArts(data);
-    if(result && result.status === 1) {
-      commit('SET_RANDOM_ART_LIST', result.data || []);
+    if (result && result.status === 1) {
+      commit("SET_RANDOM_ART_LIST", result.data || []);
     }
-    
   },
 
   // 喜欢文章
   async likeArt({ commit }, data) {
     const res = await service.likeArt(data);
-    if(res && res.status === 1) {
-      commit('ADD_LIKE');
+    if (res && res.status === 1) {
+      commit("ADD_LIKE");
       return res;
     }
-    return 0 ;
+    return 0;
   }
 };

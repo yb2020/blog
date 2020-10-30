@@ -1,7 +1,6 @@
 <template>
   <header class="mobile-head">
-
-    <form 
+    <!-- <form 
       class="search " 
       :class="{'active': search}"
       @submit.stop.prevent="searchTo">
@@ -17,20 +16,35 @@
       <a href="javascript:;" @click="close">
         <i class="iconfont icon-close"></i>
       </a>
-    </form>
+    </form> -->
     <nav>
       <div>
         <a href="javascript:;" @click.stop.prevent="toggleSidebar(!mobileSidebar)"><i class="iconfont icon-list"></i></a>
       </div>
-      <div class="name">
+      <form 
+        class="search " 
+        :class="{'active': search}"
+        @submit.stop.prevent="searchTo">
+
+        <input
+          type="text"
+          placeholder="输入关键字..."
+          v-model="keyword"
+          @keyup.enter.stop.prevent="searchTo" 
+          :maxlength="20"/>
+        <div class="searchButton" @click="searchTo"><i class="iconfont icon-search"></i></div>
+        <!-- <a href="javascript:;" @click="close">
+          <i class="iconfont icon-close"></i>
+        </a> -->
+      </form>
+      <!-- <div class="name">
         <nuxt-link to="/">
-          <!--<img src="~/static/images/logo.png" alt="" width="30">-->
           <img :src="option.staticDomain + option.logo" alt="" width="30" />
         </nuxt-link>
       </div>
       <div>
         <a href="javascript:;" @click.stop.prevent="search = !search"><i class="iconfont icon-search"></i></a>
-      </div>
+      </div> -->
     </nav>
   </header>
 </template>
@@ -69,6 +83,7 @@ export default {
     },
 
     searchTo () {
+      if(!this.keyword) {return false}
       this.$router.push(`/search/${this.keyword}`)
       // this.keyword = ''
     },
@@ -85,7 +100,6 @@ export default {
 <style scoped lang="scss">
 
 .mobile-head {
-  position: relative;
   position: fixed;
   top: 0;
   z-index: 999;
@@ -93,12 +107,13 @@ export default {
   padding: 0 1rem;
   height: $header-height - .5;
   line-height: $header-height - .5 ;
-  background: $white;
+  background: #1a1a1b;
   box-shadow: 0 1px 2px rgba(0,0,0,.05);
 
   >nav {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
     >.name {
       font-size: $font-size-large;
@@ -114,31 +129,42 @@ export default {
       }
     }
   }
-
   .search {
-    display: flex;
-    align-items: center;
+    width: 100%;
     justify-content: space-between;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 1rem;
-    background: $white;
-    z-index: 999;
-    @include css3-prefix('transform', 'translateY(-100%)');
-
-    &.active {
-      transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
-      @include css3-prefix('transform', 'translateY(0)');
+    align-items: center;
+    display: flex;
+    .searchButton {
+      cursor: pointer;
+      margin-left: -28px;
+      position: relative;
+      >.iconfont {
+        font-size: 20px;
+      }
     }
 
-    input {
-      width: $container-right;
+    >input {
+      width: 100%;
       height: 2rem;
-      line-height: 2rem;
+      font-size: 14px;
+      margin-left: 10px;
+      line-height: 38px;
+      color: $text;
+      @include transition(opacity .15s ease);
     }
+
+    >input::-webkit-input-placeholder {
+      color: #666d73;
+    }
+
+    >input::-moz-placeholder {
+      color: #666d73;
+    }
+
+    >input::input-placeholder {
+      color: #666d73;
+    }
+
   }
 }
 

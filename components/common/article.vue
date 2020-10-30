@@ -1,49 +1,43 @@
 <template>
     <div tag="div" class="article-box" :class="{'mobile': mobileLayout}">
-      <div
-        class="article-item"
-        v-for="item in articleList"
+      <div class="item"
+        v-for="item in articlePage.list"
         :key="item.id"
         :class="{'mobile-article': mobileLayout}">
-        <div class="content">
-          <p class="title"><nuxt-link :to="`/article/${item.url}`">{{ item.title }}</nuxt-link></p>
-          <!--
-          <nuxt-link :to="`/article/${item.url}`" v-if="mobileLayout">
-            <img :src="option.staticDomain + '?imageView2/1/w/350/h/180/watermark/2/text/amtjaGFvLmNu/font/Y2FuZGFyYQ==/fontsize/400/fill/I0ZGRkZGRg=='"
-            alt=""
-            width="100%"
-            class="mobil-img"/>
-          </nuxt-link>
-          -->
-          <nuxt-link :to="`/article/${item.url}`">
-          <div class="abstrack">
-            {{ item.summary | text(200)}}
+
+        <div class="title">
+          <div class="titleContent">
+            <div class="yearLabel">
+              {{item.publishDate | parseTime('{y}')}}
+            </div>
+            <div class="content">
+              <nuxt-link :to="`/article/${item.url}`">{{ item.title }}</nuxt-link>
+            </div>
           </div>
-          </nuxt-link>
-          <div class="meta">
-            <span class="time" v-if="!mobileLayout">
-              {{
-                item.publishDate | dateFormat('yyyy年MM月dd日 hh时mm分')
-              }}
-            </span>
-            <span class="time" v-else>
-              {{
-                item.publishDate | dateFormat('yy.MM.dd hh:mm')
-              }}
-            </span>
-            <span class="hr"></span>
-            <span class="read"> {{ !item.readCount && item.readCount == 0 ? 0 : item.readCount }} 次阅读</span>
-            <span class="hr"></span>
-            <span class="like"> 喜欢({{ !item.likeCount && item.likeCount == 0 ? 0 : item.likeCount }})</span>
-            <span class="hr"></span>
+          <div class="isTop" v-if="item.isTop">置顶</div>
+        </div>
+        <div class="titleBorder"></div>
+        <div class="coverImage" v-if="item.thumbUrl">
+          <nuxt-link :to="`/article/${item.url}`"><img :src="option.staticDomain + item.thumbUrl" /></nuxt-link>
+        </div>
+        <div class="summary"><a href="#">{{ item.summary | text(200)}}</a></div>
+        <div class="itemFooter">
+          <div class="category">
+            分类：<a v-if="item.category" :href="`/category/${item.categoryId}`">{{item.category}}</a><span v-else>暂无分类</span>
+            &nbsp;&nbsp;点赞({{ !item.likeCount && item.likeCount == 0 ? 0 : item.likeCount }})
+            &nbsp;&nbsp;阅读({{ !item.readCount && item.readCount == 0 ? 0 : item.readCount }})
+            &nbsp;&nbsp;
             <span class="comments" v-if="item.openComment"> 评论({{ !item.commentCount && item.commentCount == 0 ? 0 : item.commentCount }})</span>
             <span class="comments" v-else> 已关闭评论</span>
           </div>
+          <div class="time" v-if="!mobileLayout">
+            发表于：{{
+                item.publishDate | parseTime()
+              }} 最后修改于：{{item.modifyDate | formatTime()}} <span v-if="item.author === user.name">作者：<a href="/aboutMe">{{item.author}}</a></span><span v-else>转载自：item.author</span>
+          </div>
         </div>
-        <span class="article-line"></span>
       </div>
-
-      <div v-if="articleList.length === 0 && !fetch" class="empty-article" key="0">
+      <div v-if="articlePage.total === 0 && !fetch" class="empty-article" key="0">
         没有文章了
       </div>
 
@@ -51,13 +45,13 @@
         <loadingCom></loadingCom>
       </div>
 
-      <div class="article-foot" key="-2" v-if="!fetch">
+      <div class="article-foot" key="-2" v-if="false">
         <div class="pre-article">
-          <nuxt-link :to="this.type ? `/${this.type}/${this.currentPage - 1}` : `/${this.currentPage - 1}`" v-show="havePreArt">上一页</nuxt-link>
+          <nuxt-link :to="`/${this.currentPage - 1}`">上一页</nuxt-link>
         </div>
 
         <div class="loading-more end-article" key="-2" v-show="haveMoreArt">
-          <nuxt-link :to="this.type ? `/${this.type}/${this.currentPage + 1}` : `/${this.currentPage + 1}`">下一页</nuxt-link>
+          <nuxt-link :to="`/${this.currentPage + 1}`">下一页</nuxt-link>
         </div>
       </div>
     </div>
@@ -72,12 +66,16 @@ export default {
   },
   name: 'article-box',
 
-  props: ['articleList', 'haveMoreArt', 'havePreArt', 'currentPage', 'currentType'],
+  props: ['articlePage', 'haveMoreArt', 'havePreArt', 'currentPage', 'currentType'],
 
   computed: {
     fetch () {
       // return true
       return this.$store.state.article.fetch
+    },
+
+    user () {
+      return this.$store.state.options.adminInfo
     },
 
     option () {
@@ -86,12 +84,9 @@ export default {
 
     mobileLayout () {
       return this.$store.state.options.mobileLayout
-    },
-
-    type() {
-      return ['', 'code', 'think', 'fuck'][this.currentType]
     }
   }
+  
 }
 </script>
 
@@ -100,6 +95,83 @@ export default {
 .article-box {
   width: $container-left;
   margin: 0 auto;
+
+  .item {
+    border-bottom: 2px solid #565656;
+
+    .title {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      .titleContent {
+          display: -webkit-box;
+          align-items: baseline;
+          width: 90%;
+
+        .yearLabel {
+          font-size: 78px;
+          font-style: italic;
+          color: #2d2d2f;
+          font-weight: bold;
+          width: 200px;
+        }
+        .content {
+          position: relative;
+          left: -180px;
+          top: -18px;
+          font-size: 20px;
+          font-weight: bolder;
+          z-index: 20;
+        }
+      }
+      .isTop {
+        font-size: 30px;
+        font-style: italic;
+        font-weight: bold;
+        color: #9c4419;
+        position: relative;
+        top: -10px;
+        width: 70px;
+      }
+
+    }
+    .titleBorder {
+      position: relative;
+      bottom: 24px;
+      height: 1px;
+      width: 60%;
+      background-color: #3a3b3e;
+    }
+    .coverImage {
+      position: relative;
+      top: -10px;
+      img {
+        width: 80%;
+        border-radius: 6px;
+      }
+    }
+    .summary {
+      font-size: 14px;
+      padding: 0px 10px;
+    }
+    .itemFooter {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      font-size: 12px ;
+      padding: 10px 10px 5px 10px;;
+      .category {
+        color: #acc0ff;
+      }
+      .time {
+        color: #5e5d6f;
+      }
+    }
+    a:hover {
+      color: $href;
+      text-decoration: underline;
+    }
+  }
 
   >.article-item {
     position: relative;
@@ -209,7 +281,6 @@ export default {
   .empty-article {
     text-align: center;
     font-size: $font-size-base;
-    margin-top: $md-pad;
   }
 
   .loading-article {

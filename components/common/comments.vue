@@ -303,11 +303,9 @@
     mounted () {
       this.initUser()
 
-      // 移动端直接加载评论
-      if (!!this.mobileLayout) {
-        this.loadComemntList({ pageSize: 100 })
-        return
-      }
+      //直接加载评论
+      this.loadComemntList({ pageSize: 100 })
+      return
 
       window.onscroll = _.throttle(() => {
 

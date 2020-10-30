@@ -1,139 +1,144 @@
 <template>
   <div class="article-list" :class="{'mobile': mobileLayout}">
-
-    <div class="article-cont">
-      <h3 class="article-title">{{ article.title }}</h3>
-      
-
-      <div class="meta">
-        <span class="time">{{ article.publishDate | dateFormat('yyyy年MM月dd日 hh时mm分') }}</span>
-        <span class="num" v-if="!mobileLayout">字数 {{ article.content.length }}</span>
-        <span class="view">阅读 {{ !article.readCount && article.readCount == 0 ? 0 : article.readCount }}</span>
-        <span class="view">喜欢({{ !article.likeCount && article.likeCount == 0 ? 0 : article.likeCount }})</span>
-        <span class="comment" v-if="article.openComment">评论({{ !article.commentCount && article.commentCount == 0 ? 0 : article.commentCount }})</span>
-        <span class="comment" v-else>已关闭评论</span>
-        <span class="tag" v-if="!mobileLayout">
-          标签 
-          <nuxt-link 
-            v-for="list in article.tagArray" 
-            class="tag-list" 
-            :key="list.idName"
-            :to="`/tag/${list.idName}`"> {{ list.name }}</nuxt-link>
-        </span>
-      </div>
-      <progressive-image
-        :thumb="article.thumb"
-        v-if="article.thumb"></progressive-image>
-      <div class="content" v-html="articleContent">
-      </div>
-    </div>
-
-    <div class="item">
-      <div class="info">
-        <div>版权信息：
-          <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/"
-             target="_blank">非商用-署名-自由转载</a>
+    <div class="articleContainer" :class="{'mobile': mobileLayout}">
+      <div class="containerLeft">
+        <div class="article-cont">
+          <h3 class="article-title">{{ article.title }}</h3>
+          <div class="meta">
+            分类：<a v-if="article.category" :href="`/category/${article.categoryId}`">{{article.category}}</a><span v-else>暂无分类</span>
+            发布于：<span class="time">{{ article.publishDate | parseTime }}</span>
+            <span class="num" v-if="!mobileLayout">字数 {{ article.content.length }}</span>
+            <span class="view">{{ !article.readCount && article.readCount == 0 ? 0 : article.readCount }}次阅读</span>
+            <span class="comment" v-if="!article.openComment">已关闭评论</span>
+            <!-- <span class="view">喜欢({{ !article.likeCount && article.likeCount == 0 ? 0 : article.likeCount }})</span> -->
+            <!-- <span class="comment" v-if="article.openComment">评论({{ !article.commentCount && article.commentCount == 0 ? 0 : article.commentCount }})</span>
+            <span class="comment" v-else>已关闭评论</span> -->
+            <span class="tag" v-if="!mobileLayout">
+              <nuxt-link 
+                v-for="list in article.tagArray" 
+                class="tag-list" 
+                :key="list.idName"
+                :to="`/tag/${list.idName}`">{{ list.name }}</nuxt-link>
+            </span>
+          </div>
+          <!-- <div class="summary">{{article.summary}}</div> -->
+          <progressive-image
+            :thumb="option.staticDomain + article.thumbUrl"
+            v-if="article.thumbUrl"></progressive-image>
+          <div class="content" v-html="articleContent">
+          </div>
         </div>
-        <div class="info-left">
-          <span class="likeing" @click="like">
-            <i
-              :class="{'is-liked': isLiked}"
-              class="iconfont icon-like like"
-              ></i>
-              <span>{{ !article.likeCount && article.likeCount == 0 ? 0 : article.likeCount }}</span>
-          </span>
 
-          <span class="tag" v-if="!mobileLayout">
-            <i class="iconfont icon-tag"></i>
-            <nuxt-link 
-              v-for="list in article.tagArray" 
-              class="tag-list" 
-              :key="list.idName"
-              :to="`/tag/${list.idName}`"> {{ list.name }}</nuxt-link>
-          </span>
-        </div>
-      </div>
-
-
-      <div class="share">
-        <share class="article-share"></share>
-      </div>
-    </div>
-
-
-    <appreciate
-      :mobileLayout="mobileLayout"
-      class="item appreciate-list"></appreciate>
-
-    <div class="relative-article item">
-      <div class="tools">
-        <p class="name">相关推荐</p>
-        <span class="line"></span>
-      </div>
-      <div class="relative-list">
-        <li 
-          v-for="item in randomList"
-          class="relative-item"
-          :key="item.url">
-          <nuxt-link 
-              :key="item.url"
-              :to="`/article/${item.url}`" target="_blank">
-            <div class="relative-content">
-              <time>
-                {{ item.publishDate | dateFormat('yyyy-MM-dd') }}
-              </time>
-              <p>
-                {{ item.title }}
-              </p>
+        <div class="item">
+          <div class="info">
+            <div>版权信息：
+              <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/"
+                target="_blank">非商用-署名-自由转载</a>
             </div>
-            <p class="descript" v-if="!mobileLayout">
-              {{item.summary.length > 100 ? item.summary.slice(0, 100) + '...' : item.summary}}
-            </p>
-          </nuxt-link>
-        </li>
-        <p class="empty" v-if="randomList.length === 0">暂无推荐文章</p>
+            <div class="info-left">
+              <span class="likeing" @click="like">
+                <i
+                  :class="{'is-liked': isLiked}"
+                  class="iconfont icon-like like"
+                  ></i>
+                  <span>{{ !article.likeCount && article.likeCount == 0 ? 0 : article.likeCount }}</span>
+              </span>
+
+              <span class="tag" v-if="!mobileLayout">
+                <nuxt-link 
+                  v-for="list in article.tagArray" 
+                  class="tag-list" 
+                  :key="list.idName"
+                  :to="`/tag/${list.idName}`"> <i class="iconfont icon-tag"></i>{{ list.name }}</nuxt-link>
+              </span>
+            </div>
+          </div>
+
+
+          <div class="share">
+            <share class="article-share"></share>
+          </div>
+        </div>
+
+
+        <!-- <appreciate
+          :mobileLayout="mobileLayout"
+          class="item appreciate-list"></appreciate> -->
+
+        <!-- <div class="relative-article item">
+          <div class="tools">
+            <p class="name">相关推荐</p>
+            <span class="line"></span>
+          </div>
+          <div class="relative-list">
+            <li 
+              v-for="item in randomList"
+              class="relative-item"
+              :key="item.url">
+              <nuxt-link 
+                  :key="item.url"
+                  :to="`/article/${item.url}`" target="_blank">
+                <div class="relative-content">
+                  <time>
+                    {{ item.publishDate | dateFormat('yyyy-MM-dd') }}
+                  </time>
+                  <p>
+                    {{ item.title }}
+                  </p>
+                </div>
+                <p class="descript" v-if="!mobileLayout">
+                  {{item.summary.length > 100 ? item.summary.slice(0, 100) + '...' : item.summary}}
+                </p>
+              </nuxt-link>
+            </li>
+            <p class="empty" v-if="randomList.length === 0">暂无推荐文章</p>
+          </div>
+        </div> -->
+
+        <div class="comment" v-if="article.openComment">
+          <comments :ref-id="article.id" v-if="article.id"></comments>
+        </div>
+        <div class="comments" v-else> 已关闭评论</div>
+
+
+        <aside v-if="!mobileLayout" >
+          <div 
+            class="like" 
+            @click="like"
+            :class="{'is-liked': isLiked}">
+
+            <i
+              class="iconfont icon-like like"
+              :class="{ 'rubberBand': isLiked }"></i>
+            <div 
+              class="like-decoration"
+              :class="{ 'active': isLiked }"></div>
+              
+            <span>{{ !article.likeCount && article.likeCount == 0 ? 0 : article.likeCount }}</span>
+          </div>
+          <div class="comment" @click="scrollToComment">
+            <i class="iconfont icon-comments"></i>
+            <span>{{ !article.commentCount && article.commentCount == 0 ? 0 : article.commentCount}}</span>        
+          </div>
+        </aside>
+
+        <dialog-com 
+          :visible.sync="showDialog" 
+          :class="{'dialog-mobile': mobileLayout}"
+          :img="img"
+          :loading="loadingImg">
+        </dialog-com>
+
       </div>
+      <rightPanel :isAll="false" />
+
     </div>
-
-    <div class="comment" v-if="article.openComment">
-      <comments :ref-id="article.id" v-if="article.id"></comments>
-    </div>
-    <div class="comments" v-else> 已关闭评论</div>
-
-
-    <aside v-if="!mobileLayout" >
-      <div 
-        class="like" 
-        @click="like"
-        :class="{'is-liked': isLiked}">
-
-        <i
-          class="iconfont icon-like like"
-          :class="{ 'rubberBand': isLiked }"></i>
-        <div 
-          class="like-decoration"
-          :class="{ 'active': isLiked }"></div>
-          
-        <span>{{ !article.likeCount && article.likeCount == 0 ? 0 : article.likeCount }}</span>
-      </div>
-      <div class="comment" @click="scrollToComment">
-        <i class="iconfont icon-comments"></i>
-        <span>{{ !article.commentCount && article.commentCount == 0 ? 0 : article.commentCount}}</span>        
-      </div>
-    </aside>
-
-    <dialog-com 
-      :visible.sync="showDialog" 
-      :class="{'dialog-mobile': mobileLayout}"
-      :img="img"
-      :loading="loadingImg">
-    </dialog-com>
-
   </div>
 </template>
 
 <script>
 import markdown from '~/plugins/marked'
+import rightPanel from "~/components/layouts/rightPanel"
 import share from '~/components/layouts/share'
 import dialogCom from '~/components/common/dialog'
 import comments from '~/components/common/comments'
@@ -148,10 +153,18 @@ export default {
 
   scrollToTop: true,
 
-  components: { share, dialogCom, comments, progressiveImage, appreciate },
+  components: { share, dialogCom, comments, progressiveImage, appreciate, rightPanel },
 
-  fetch ({ store, params }) {
-    return store.dispatch('article/getArt', params)
+  async fetch ({ store, params }) {
+    const article = await store.dispatch('article/getArt', params)
+    const refList = await store.dispatch('article/getRefList', {
+      ...params
+    })
+    return {article, refList}
+  },
+
+  destroyed () {
+    this.$store.dispatch('article/clearArt')
   },
 
   head() {
@@ -354,7 +367,7 @@ export default {
     this.initEvent()
     this.$nextTick(() => {
       //this.$store.dispatch('article/getRelativeList')
-      this.$store.dispatch('article/getRandomList', {pageSize: 5})
+      // this.$store.dispatch('article/getRandomList', {pageSize: 5})
     })
   }
 }
@@ -363,419 +376,481 @@ export default {
 <style lang="scss" scope>
 
 .article-list {
-  width: $container-min-width;
+  width: $container-width;
   margin: 0 auto;
 
-  >.article-cont {
+  .articleContainer {
+    margin: 0 auto 20px;
+    display: flex;
+    width: $container-width;
 
-    .article-title {
-      font-size: $font-size-title;
+    &.mobile {
+      width: 100%;
+      transform: translate(0);
     }
 
-    >.meta {
-      padding: 1rem 0 .5rem 0;
-      font-size: .8rem;
-      color: $descript;
-      border-bottom: 1px dashed $border-color ;
-      span {
-        margin-right: .5rem;
-      }
-    }
-
-    >h3 {
-      font-size: 1.3rem;
-      color: $black;
-    }
-
-    .content {
-      margin: $lg-pad 0;
-      color: $black;
-      word-wrap: break-word;
-
-      .toc-item > a {
-        color: $blue ;
+    .containerLeft {
+      width: $container-left-width;
+      >.articleTitle {
+        background: #1a1a1b;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 24px;
+        font-style: italic;
+        color: #2fa7ff;
       }
 
+      >.article-cont {
 
-      .demo {
-        border: 1px solid $border-color;
-        border-radius: 2px;
-        padding: 25px 35px;
-        margin-top: 1em;
-        margin-bottom: 40px;
-        font-size: 1.2em;
-        line-height: 1.5em;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        overflow-x: auto;
-      }
-
-      a {
-        margin: 0 .1rem;
-
-        &.c-link {
-          color: $blue;
+        .article-title {
+          font-size: $font-size-title;
         }
 
-        &.image-link {
-          margin: 0;
-        }
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-
-      .image-package {
-        text-align: center;
-        width: 92%;
-        margin: 0 auto 1rem auto;
-
-        .img-caption {
-          min-width: 10%;
-          max-width: 80%;
-          min-height: 22px;
-          display: inline-block;
-          padding: 6px;
-          margin: 10px auto;
-          border-bottom: 1px solid $border-color;
-          font-size: 14px;
-          color: $disabled;
-          line-height: 1.2;
-
-          &:empty {
-            display: none;
-          }
-        }
-      }
-
-      img {
-        max-width: 100%;
-        display: block;
-        text-align: center;
-        border-radius: $radius;
-        transition: all .25s;
-
-        &.img-pop {
-          cursor: zoom-in;
-        }
-      }
-
-      p {
-        line-height: 1.8rem;
-        margin: 1.5rem 0;
-
-        &.text-center {
-          text-align: center;
-        }
-
-        &.text-right {
-          text-align: right;
-        }
-      }
-
-      iframe {
-        margin: 1.5rem 0;
-        background: $black;
-
-        &.music {
-          background: transparent;
-          width: 100%;
-        }
-      }
-
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        margin: 1.5rem 0;
-        padding-left: 0;
-        line-height: 1.8rem;
-        font-weight: 700;
-        text-indent: 0;
-
-        &:target{
-          padding-top: 4.5rem;
-        }
-      }
-
-      hr {
-        height: 0.1rem;
-        background: $text;
-        border: 0;
-      }
-
-      blockquote {
-  
-        padding: 0 1rem;
-        margin: 1.5rem 0;
-        color: #6a737d;
-        border-left: 0.25rem solid #dfe2e5;
-  
-        p {
-          text-indent: 0rem;
-
-          &:first-child {
-            margin-top: 0;
-          }
-          &:last-child {
-            margin-bottom: 0;
-          }
-        }
-      }
-
-      ul {
-        list-style-type: square;
-      }
-
-      ul,
-      ol {
-        padding-left: 2rem;
-        margin: 1.5rem 0;
-
-        >li {
-          line-height: 1.5rem;
-          padding: .5rem;
-          list-style-type: disc;
-
-
-          >p {
-            text-indent: 0;
-            margin: 0;
-          }
-
-          >ul {
-
-            li {
-              list-style-type: circle;
-            }
-
-            &:last-child {
-              margin-bottom: 0;
-            }
-          }
-        }
-      }
-
-      ul {
-        list-style: disc;
-      }
-
-      table {
-        font-size: .8rem;
-        max-width: 100%;
-        overflow: auto;
-        border: 1px solid $border-color;
-        border-collapse: collapse;
-        border-spacing: 0;
-
-        thead {
-          background: $module-bg;
-          text-align: left;
-        }
-
-        th, td {
-          padding: .8rem .5rem;
-          line-height: 1.5rem;
-        }
-
-        tr:nth-child(2n) {
-          background: $module-bg;
-        }
-
-        td {
-          min-width: 7.5rem;
-        }
-      }
-
-      code {
-        padding: .2rem .4rem;
-        margin: 0;
-        border-radius: $radius;
-        background-color: $module-hover-bg;
-        color: $red-light-1;
-      }
-
-      pre {
-        margin: 1.5rem 0;
-        overflow: auto;
-        font-size: 85%;
-        line-height: 1.45;
-        background-color: $code-bg;
-        border-radius: 3px;
-        word-wrap: normal;
-
-        >code {
-          margin: 0;
-          padding: 1rem;
-          float: left;
-          width: 100%;
-          height: 100%;
-          display: block;
-          line-height: 1.6rem;
-          background-color: transparent;
-          color: $text;
-        }
-      }
-    }
-  }
-
-  >.item {
-    margin: 3rem 0 1rem 0;
-    padding: $lg-pad 0;
-
-    >.info {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: $disabled;
-
-      >.info-left {
-        display: flex;
-        align-items: center;
-
-        >.likeing {
-          i {
-            vertical-align: middle;
-          }
-
+        >.meta {
+          padding: 1rem 0 .5rem 0;
+          font-size: .8rem;
+          color: $descript;
+          border-bottom: 1px dashed $border-color ;
           span {
-            cursor: pointer;
-            //margin-left: .4rem;
-            vertical-align: middle;
+            margin-right: .5rem;
+          }
+          a:hover {
+            color: $href ;
+            text-decoration: underline;
+          }
+          span.tag {
+            a {
+              border: 1px solid $border-color;
+              padding: 2px 6px;
+              margin-right: .5rem;
+              border-radius: 20px;
+            }
+            a:hover {
+              color: $href ;
+              border-color: $href;
+              text-decoration: none;
+            }
           }
         }
-        .like {
-          cursor: pointer;
-          //margin-right: .3rem;
+
+        >h3 {
+          font-size: 1.3rem;
+          color: $black;
         }
 
-        .is-liked {
-          color: $red;
-        }
+        .content {
+          margin: $lg-pad 0;
+          color: $black;
+          word-wrap: break-word;
+
+          .toc-item > a {
+            color: $blue ;
+          }
 
 
-        .tag {
-          margin-left: 4rem;
+          .demo {
+            border: 1px solid $border-color;
+            border-radius: 2px;
+            padding: 25px 35px;
+            margin-top: 1em;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+            line-height: 1.5em;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            overflow-x: auto;
+          }
 
           a {
-            margin: 0 .5rem;
-            text-decoration: underline;
+            margin: 0 .1rem;
 
-            &:last-child {
+            &.c-link {
+              color: $blue;
+            }
+
+            &.image-link {
               margin: 0;
+            }
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+
+          .image-package {
+            text-align: center;
+            width: 92%;
+            margin: 0 auto 1rem auto;
+
+            .img-caption {
+              min-width: 10%;
+              max-width: 80%;
+              min-height: 22px;
+              display: inline-block;
+              padding: 6px;
+              margin: 10px auto;
+              border-bottom: 1px solid $border-color;
+              font-size: 14px;
+              color: $disabled;
+              line-height: 1.2;
+
+              &:empty {
+                display: none;
+              }
+            }
+          }
+
+          img {
+            max-width: 100%;
+            display: block;
+            text-align: center;
+            border-radius: $radius;
+            transition: all .25s;
+
+            &.img-pop {
+              cursor: zoom-in;
+            }
+          }
+
+          p {
+            line-height: 1.8rem;
+            margin: 1.5rem 0;
+
+            &.text-center {
+              text-align: center;
+            }
+
+            &.text-right {
+              text-align: right;
+            }
+          }
+
+          iframe {
+            margin: 1.5rem 0;
+            background: $black;
+
+            &.music {
+              background: transparent;
+              width: 100%;
+            }
+          }
+
+          h1,
+          h2,
+          h3,
+          h4,
+          h5,
+          h6 {
+            margin: 1.5rem 0;
+            padding-left: 0;
+            line-height: 1.8rem;
+            font-weight: 700;
+            text-indent: 0;
+
+            &:target{
+              padding-top: 4.5rem;
+            }
+          }
+
+          hr {
+            height: 0.1rem;
+            background: $text;
+            border: 0;
+          }
+
+          blockquote {
+      
+            padding: 0 1rem;
+            margin: 1.5rem 0;
+            color: #6a737d;
+            border-left: 0.25rem solid #dfe2e5;
+      
+            p {
+              text-indent: 0rem;
+
+              &:first-child {
+                margin-top: 0;
+              }
+              &:last-child {
+                margin-bottom: 0;
+              }
+            }
+          }
+
+          ul {
+            list-style-type: square;
+          }
+
+          ul,
+          ol {
+            padding-left: 2rem;
+            margin: 1.5rem 0;
+
+            >li {
+              line-height: 1.5rem;
+              padding: .5rem;
+              list-style-type: disc;
+
+
+              >p {
+                text-indent: 0;
+                margin: 0;
+              }
+
+              >ul {
+
+                li {
+                  list-style-type: circle;
+                }
+
+                &:last-child {
+                  margin-bottom: 0;
+                }
+              }
+            }
+          }
+
+          ul {
+            list-style: disc;
+          }
+
+          table {
+            font-size: .8rem;
+            max-width: 100%;
+            overflow: auto;
+            border: 1px solid $border-color;
+            border-collapse: collapse;
+            border-spacing: 0;
+
+            thead {
+              background: $module-bg;
+              text-align: left;
+            }
+
+            th, td {
+              padding: .8rem .5rem;
+              line-height: 1.5rem;
+            }
+
+            tr:nth-child(2n) {
+              background: $module-bg;
+            }
+
+            td {
+              min-width: 7.5rem;
+            }
+          }
+
+          code {
+            padding: .2rem .4rem;
+            margin: 0;
+            border-radius: $radius;
+            background-color: $module-hover-bg;
+            color: $red-light-1;
+          }
+
+          pre {
+            margin: 1.5rem 0;
+            overflow: auto;
+            font-size: 85%;
+            line-height: 1.45;
+            background-color: $code-bg;
+            border-radius: 3px;
+            word-wrap: normal;
+
+            >code {
+              margin: 0;
+              padding: 1rem;
+              float: left;
+              width: 100%;
+              height: 100%;
+              display: block;
+              line-height: 1.6rem;
+              background-color: transparent;
+              color: $text;
             }
           }
         }
       }
+
+      >.item {
+        // margin: 3rem 0 1rem 0;
+        padding: 1rem 0;
+        font-size: 14px;
+        
+        >.info {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          color: $disabled;
+
+          >.info-left {
+            display: flex;
+            align-items: center;
+
+            >.likeing {
+              margin-right: .5rem;
+              i {
+                vertical-align: middle;
+              }
+
+              span {
+                cursor: pointer;
+                //margin-left: .4rem;
+                vertical-align: middle;
+              }
+            }
+            .like {
+              cursor: pointer;
+              //margin-right: .3rem;
+            }
+
+            .is-liked {
+              color: $red;
+            }
+
+            .tag {
+              margin-left: 4rem;
+              a {
+                border: 1px solid $border-color;
+                padding: 2px 6px;
+                margin: 0 .5rem;
+                border-radius: 20px;
+              }
+              a:hover {
+                color: $href ;
+                border-color: $href;
+                text-decoration: none;;
+              }
+              &:last-child {
+                margin: 0;
+              }
+            }
+
+          }
+
+          a:hover {
+            text-decoration: underline;
+          }
+        }
+        >.share {
+          position: fixed;
+          top: 18rem;
+          margin-left: -52px;
+        }
+
+        &.relative-article,
+        &.appreciate-list {
+          position: relative;
+          padding: 1em 0;
+          padding-top: 0;
+
+          .tools {
+            position: relative;
+            display: flex;
+            padding: 1em 0;
+            padding-top: 0;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+          }
+
+          .name {
+            position: relative;
+            padding-right: 1.5rem;
+            color: var(--theme-black);
+            background: var(--theme-white);
+            font-weight: 500;
+            z-index: 99;
+          }
+
+          .relative-list {
+            padding: 1rem;
+          }
+
+          .empty {
+            padding: 3rem 1.5rem 0rem 1.5rem;
+            text-align: center;
+            font-size: 1.3rem;
+          }
+
+          .relative-item {
+            width: 100%;
+            //padding: 0 2rem;
+            margin: .5rem 0;
+            //list-style-type: none;
+            cursor: pointer;
+            
+            a:hover {
+              display: block ;
+              background-color: $module-hover-bg-light-3 ;
+              //border-radius: .5rem ;
+            }
+          }
+
+          .descript {
+            padding: .5rem 1.3rem;
+            line-height: 1.6rem;
+            color: $text;
+          }
+
+          .relative-content::after {
+            content: " ";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 4px;
+            height: 4px;
+            margin-left: 4px;
+            background: var(--text-light-4);
+            border-radius: 50%;
+          }
+
+          .relative-content {
+            position: relative;
+            display: flex;
+            //height: 20px;
+            line-height: 1.2rem;
+            color: $dividers;
+            font-size: 1rem;
+            
+            p {
+              //margin-left: 1rem;
+              line-height: 1.4rem;
+              //margin-top: 1rem;
+            }
+
+            time {
+              margin-left: 1rem;
+              font-size: 1em;
+              width: 6rem;
+            }
+
+          }
+        }
+      }
+
+    }
+
+    .containerRight {
+      width: $container-right-width;
+      margin-left: 20px;
 
       a:hover {
         text-decoration: underline;
       }
     }
-    >.share {
-      margin-top: 1.3rem;
-    }
-
-    &.relative-article,
-    &.appreciate-list {
-      position: relative;
-      padding: 1em 0;
-      padding-top: 0;
-
-      .tools {
-        position: relative;
-        display: flex;
-        padding: 1em 0;
-        padding-top: 0;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-      }
-
-      .name {
-        position: relative;
-        padding-right: 1.5rem;
-        color: var(--theme-black);
-        background: var(--theme-white);
-        font-weight: 500;
-        z-index: 99;
-      }
-
-      .relative-list {
-        padding: 1rem;
-      }
-
-      .empty {
-        padding: 3rem 1.5rem 0rem 1.5rem;
-        text-align: center;
-        font-size: 1.3rem;
-      }
-
-      .relative-item {
-        width: 100%;
-        //padding: 0 2rem;
-        margin: .5rem 0;
-        //list-style-type: none;
-        cursor: pointer;
-        
-        a:hover {
-          display: block ;
-          background-color: $module-hover-bg-light-3 ;
-          //border-radius: .5rem ;
-        }
-      }
-
-      .descript {
-        padding: .5rem 1.3rem;
-        line-height: 1.6rem;
-        color: $text;
-      }
-
-      .relative-content::after {
-        content: " ";
-        position: absolute;
-        left: 0;
-        top: 8px;
-        width: 4px;
-        height: 4px;
-        margin-left: 4px;
-        background: var(--text-light-4);
-        border-radius: 50%;
-      }
-
-      .relative-content {
-        position: relative;
-        display: flex;
-        //height: 20px;
-        line-height: 1.2rem;
-        color: $dividers;
-        font-size: 1rem;
-        
-        p {
-          //margin-left: 1rem;
-          line-height: 1.4rem;
-          //margin-top: 1rem;
-        }
-
-        time {
-          margin-left: 1rem;
-          font-size: 1em;
-          width: 6rem;
-        }
-
-      }
-    }
   }
 
-  >aside {
+  
+
+
+  aside {
     position: fixed;
-    right: 0;
-    bottom: 17rem;
+    top: 10rem;
+    margin-left: -60px;
 
     > div {
       position: relative;
@@ -783,6 +858,9 @@ export default {
       height: $xlg-pad;
       text-align: center;
       line-height: $xlg-pad;
+      margin-top: 10px;
+      border-radius: 50%;
+      background: #1d1919;
       border: 1px solid $border-color;
       box-shadow: 0 2px 4px 0 rgba(0,0,0,.14);
       cursor: pointer;
@@ -799,6 +877,7 @@ export default {
 
       &.is-liked {
         color: $red;
+        border: $red;
       }
 
 

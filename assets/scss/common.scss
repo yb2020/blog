@@ -48,7 +48,7 @@ pre {
 }
 
 .container {
-  width: $container-width;
+  // width: $container-width;
   margin: 0 auto;
 }
 
@@ -81,21 +81,21 @@ pre {
     &.article-share {
   
       > .share-box {
-        opacity: .6;
+        opacity: .2;
   
         &:hover {
           opacity: 1;
         }
   
         > .share-link {
-          width: calc((100% - (.445em * 11)) / 12);
-          height: 2.2em;
-          line-height: 2.3em;
-          background-color: $border-color;
-          margin-right: .445em;
+          // width: calc((100% - (.445em * 11)) / 12);
+          // height: 2.2em;
+          // line-height: 2.3em;
+          // background-color: $border-color;
+          // margin-right: .445em;
   
           > .iconfont {
-            font-size: 1.3em;
+            font-size: 2rem;
           }
   
           &:last-child {

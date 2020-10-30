@@ -5,7 +5,7 @@
           <div class="logo">
             <nuxt-link to="/">
               <!--img src="~/static/images/logo.png" alt="" width="36"-->
-              <img :src="option.staticDomain + option.logo" alt="" width="36" />
+              <img :src="option.staticDomain + option.logo" alt="" width="38" />
             </nuxt-link>
           </div>
           <nav>
@@ -39,10 +39,21 @@
               </div>
             </div>
           </nav>
+          <div class="searchBox">
+            <input
+              type="text"
+              class="searchInput"
+              v-model="keyword"
+              placeholder="输入关键字..."
+              ref="search"
+              @keyup.enter="search" 
+              :maxlength="10"/>
+              <div class="searchButton" @click="search"><i class="iconfont icon-search"></i></div>
+          </div>
         </div>
 
       <div class="header-right">
-        <div
+        <!-- <div
           class="search-box"
           @click="open = true"
           v-click-outside="hide"
@@ -57,7 +68,7 @@
               :maxlength="10"/>
             <div class="eks" @click.stop="search"></div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </header>
@@ -86,8 +97,7 @@ export default {
         //     { path: '/think', name: '读书' },
         //   ]
         // },
-        { path: '/', name: '全部文章', icon: 'iconfont icon-read'},
-        { path: '/aboutMe', name: '关于我', icon: 'iconfont icon-read'}
+        { path: '/', name: '首页', icon: 'iconfont icon-read'}
         //{ path: '/wall', name: '留言墙', icon: 'iconfont icon-read'}
       ]
     }
@@ -138,13 +148,9 @@ export default {
     },
 
     search () {
-      if (!this.open) {
-        this.open = true
-        return
-      }
+      if(!this.keyword) {return false}
       this.$router.push(`/search/${this.keyword}`)
-      this.open = false
-      this.keyword = ''
+      //this.keyword = ''
     },
 
     togglePlay() {
@@ -182,14 +188,12 @@ export default {
                               window.scrollY ||
                               document.body.scrollTop
           let delta = afterScrollTop - beforeScrollTop
-          if (delta === 0 ) return false
-          delta > 0
-          ? el.classList.add('fixed')
-          : el.classList.remove('fixed')
-          setTimeout(() => {
-            beforeScrollTop = afterScrollTop
-          }, 0)
-        }, 200))
+          if(afterScrollTop > 80) {
+            el.classList.add('fixed')
+          }else if(afterScrollTop <= 0) {
+            el.classList.remove('fixed')
+          }
+        }, 100))
       },
       unbind () {
         window.onscroll = null
@@ -226,15 +230,12 @@ header {
   z-index: 999;
   width: 100%;
   height: $header-height;
-  background: $white;
+  background: #1a1a1b;
   transform: translateY(0);
 
-  &:hover {
-    background: $white;
-  }
 
   &.fixed {
-    transform: translateY(-100%);
+    //transform: translateY(-100%);
   }
 
   &.darken {    
@@ -249,7 +250,7 @@ header {
     min-width: $container-width;
     height: $header-height;
     padding: 0 $lg-pad;
-    line-height: $header-height;
+    line-height: $header-height - .4;
 
     >.header-left {
       display: flex;
@@ -266,7 +267,7 @@ header {
 
           img {
             vertical-align: text-bottom;
-            border-radius: 50%;
+            border-radius: 6px;
             align-items: center;
             justify-content: center;
             overflow: hidden;
@@ -290,7 +291,7 @@ header {
       }
 
       a:hover {
-        color: $black;
+        color: $href;
       }
 
       &:hover {
@@ -318,7 +319,9 @@ header {
     }
 
     a.link-active {
-      color: $black;
+      color: $href;
+      border-bottom: 2px solid $href;
+      padding-bottom: 1.42rem;
     }
   }
 
@@ -411,6 +414,58 @@ header {
         }
       }
     }
+  }
+  .searchBox {
+    padding-left: 2rem;
+    display: flex;
+    align-items: center;
+    .searchButton {
+      cursor: pointer;
+      margin-left: -28px;
+      margin-bottom: 4px;
+      position: relative;
+      >.iconfont {
+        font-size: 20px;
+      }
+    }
+  }
+  .searchInput {
+    height: 2rem;
+    border-radius: 4px;
+    width: 20rem;
+    font-size: 12px;
+    padding: 1rem;
+    background: #252525;
+    border: 0px;
+    color: #a7a7a7;
+
+    &::after {
+        top: 90%;
+        left: 100%;
+        width: 5px;
+        height: 2px;
+        background-color: $black;
+        border-radius: 1px;
+        @include def;        
+        @include transition(width .15s ease .45s);
+        @include transform(rotate(45deg));
+        @include transform-origin(top left);
+      }
+  }
+
+  .searchInput::-webkit-input-placeholder {
+    color: #666d73;
+    font-size: 12px;
+  }
+
+  .searchInput::-moz-placeholder {
+    font-size: 12px;
+    color: #666d73;
+  }
+
+  .searchInput::input-placeholder {
+    font-size: 12px;
+    color: #666d73;
   }
 
   .search.open {

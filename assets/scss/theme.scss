@@ -6,6 +6,7 @@
   $theme-primary,
   $theme-green,
   $theme-text,
+  $theme-href,
   $border-color
 ) {
   --module-bg: rgba(#{$theme-white}, 0.6);
@@ -22,6 +23,7 @@
   --theme-red: #{$theme-red};
   --theme-primary: #{$theme-primary};
   --theme-green: #{$theme-green};
+  --theme-href: #{$theme-href};
 
   --theme-red-light-1: #{lighten($theme-red, 5%)};
 
@@ -45,6 +47,7 @@ body {
       $theme-white: #fff,
       $theme-black: #24292e,
       $theme-red: #CA5C54,
+      $theme-href: #2fa7ff,
       $theme-primary: #75BFD7,
       $theme-green: #73B769,
       $border-color: #eee,
@@ -54,8 +57,9 @@ body {
 
   &#dark {
     @include theme(
-      $theme-white: #282c35,
+      $theme-white: #212225,
       $theme-black: #d3d3d3,
+      $theme-href: #2fa7ff,
       $theme-red: #CA5C54,
       $theme-primary: #75BFD7,
       $theme-green: #73B769,
