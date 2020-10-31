@@ -99,6 +99,7 @@ export const actions = {
     if (res && res.status === 1) {
       if (!process.client) {
         commit("SET_ART_SUCCESS", res.data);
+        return res.data;
       } else
         setTimeout(() => {
           commit("SET_ART_SUCCESS", res.data);

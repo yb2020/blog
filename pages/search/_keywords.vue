@@ -92,7 +92,6 @@ export default {
       pageSize: 20
     })
     const refList = await store.dispatch('article/getRefList', {
-      ...params
     })
     return {categoryList, refList}
   },

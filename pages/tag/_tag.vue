@@ -15,7 +15,7 @@
     </div>
 
   </div>
-  <rightPanel :isAll="false" />
+  <rightPanel :isAll="articlePage.total === 0 ? true: false" />
   
 </div>
 </template>
@@ -28,14 +28,14 @@ export default {
   transition: 'fade',
   scrollToTop: true,
   async fetch ({ store, params }) {
-    const categoryList = await store.dispatch('article/getArtList', {
+    const tagList = await store.dispatch('article/getArtList', {
       ...params,
       pageSize: 20
     })
-    const refList = await store.dispatch('article/getRefList', {
-      ...params
-    })
-    return {categoryList, refList}
+    const tmpParams = tagList && tagList.total > 0 ? {...params} : {}
+
+    const refList = await store.dispatch('article/getRefList', tmpParams)
+    return {tagList, refList}
   },
 
   head() {

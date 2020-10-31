@@ -14,7 +14,7 @@
           currentType=""></articleView>
       </div>
     </div>
-    <rightPanel :isAll="false" />
+    <rightPanel :isAll="articlePage.total === 0 ? true: false" />
   </div>
 </template>
 <script>
@@ -34,9 +34,9 @@ export default {
       ...params,
       pageSize: 20
     })
-    const refList = await store.dispatch('article/getRefList', {
-      ...params
-    })
+    const tmpParams = categoryList && categoryList.total > 0 ? {...params} : {}
+
+    const refList = await store.dispatch('article/getRefList', tmpParams)
     return {categoryList, refList}
   },
   
