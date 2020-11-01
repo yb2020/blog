@@ -88,7 +88,7 @@ export default {
 
   async fetch ({ store }) {
     const indexAll = await store.dispatch('article/getArtList', {
-      page_size: 1000
+      pageSize: 1000
     })
     const refList = await store.dispatch('article/getRefList', {
     })

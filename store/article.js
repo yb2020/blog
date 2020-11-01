@@ -88,13 +88,13 @@ export const actions = {
   async getArtList(
     { commit, state },
     data = {
-      current_page: 1
+      currentPage: 1
     }
   ) {
     commit("FETCH_ART");
     const res = await service.getArts({
       ...data,
-      pageSize: data.pageSize || 6
+      pageSize: data.pageSize || 10
     });
     if (res && res.status === 1) {
       if (!process.client) {
@@ -141,6 +141,7 @@ export const actions = {
     });
 
     commit("SET_REF_LIST", list.data.list || []);
+    return list.data.list;
   },
 
   async getRandomList({ commit, state }, data) {

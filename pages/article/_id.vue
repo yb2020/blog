@@ -157,9 +157,12 @@ export default {
 
   async fetch ({ store, params }) {
     const article = await store.dispatch('article/getArt', params)
-    const refList = await store.dispatch('article/getRefList', {
+    let refList = await store.dispatch('article/getRefList', {
       ...params
     })
+    if(refList && refList.length === 0) {
+      refList = await store.dispatch('article/getRefList')
+    }
     return {article, refList}
   },
 
@@ -679,7 +682,7 @@ export default {
         // margin: 3rem 0 1rem 0;
         padding: 1rem 0;
         font-size: 14px;
-        
+
         >.info {
           display: flex;
           justify-content: space-between;
