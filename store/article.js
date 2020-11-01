@@ -137,7 +137,7 @@ export const actions = {
     const list = await service.listRef({
       ...data,
       currentPage: 1,
-      pageSize: 4
+      pageSize: 5
     });
 
     commit("SET_REF_LIST", list.data.list || []);

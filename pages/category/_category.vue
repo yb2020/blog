@@ -32,7 +32,7 @@ export default {
   async fetch ({ store, params }) {
     const categoryList = await store.dispatch('article/getArtList', {
       ...params,
-      pageSize: 20
+      pageSize: 1000
     })
     const tmpParams = categoryList && categoryList.total > 0 ? {...params} : {}
 

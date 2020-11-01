@@ -89,7 +89,7 @@ export default {
   async fetch ({ store, params }) {
     const categoryList = await store.dispatch('article/getArtList', {
       ...params,
-      pageSize: 20
+      pageSize: 1000
     })
     const refList = await store.dispatch('article/getRefList', {
     })
