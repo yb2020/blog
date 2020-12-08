@@ -53,8 +53,12 @@ module.exports = {
           "Java、Spring Cloud、微服务专家、Vue、全棧架构师、运维、部署、运营、推广、房地产、金融、回味人生、感悟"
       },
       {
+        name: "sogou_site_verification",
+        content: "MrQF14ra0n"
+      },
+      {
         name: "author",
-        content: "http://yi.wuhuhai.com/aboutMe"
+        content: "http://gebilaoyi.com/aboutMe"
       }
     ],
 
