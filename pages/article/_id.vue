@@ -557,10 +557,32 @@ export default {
             }
           }
 
+          h1,h2 {
+            text-align: center;
+            display: table;
+            margin: 1.5rem auto;
+          }
+
+          h1 {
+            border-bottom: 4px solid brown;
+          }
+
+          h2 {
+            background: brown;
+            padding: .5rem 1rem;
+            border-radius: 4px;
+          }
+
           hr {
             height: 0.1rem;
             background: $text;
             border: 0;
+          }
+          .articleFooter {
+            p {
+              margin: 0rem;
+              line-height: 0.2rem;
+            }
           }
 
           blockquote {
