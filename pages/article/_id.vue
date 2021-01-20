@@ -366,9 +366,9 @@ export default {
   },
 
   mounted () {
-    this.init ()
-    this.initEvent()
     this.$nextTick(() => {
+      this.init ()
+      this.initEvent()
       //this.$store.dispatch('article/getRelativeList')
       // this.$store.dispatch('article/getRandomList', {pageSize: 5})
     })
