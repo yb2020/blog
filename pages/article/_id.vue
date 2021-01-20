@@ -166,9 +166,10 @@ export default {
     return {article, refList}
   },
 
-  destroyed () {
-    this.$store.dispatch('article/clearArt')
-  },
+  // TODO: 先注释掉，现在有这个文章页与文章之间的跳转会出问题，但是总感觉之前不是随便加的，先修复线上的效果吧
+  // destroyed () {
+  //   this.$store.dispatch('article/clearArt')
+  // },
 
   head() {
     return {
