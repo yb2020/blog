@@ -695,7 +695,7 @@ export default {
               display: block;
               line-height: 1.6rem;
               background-color: transparent;
-              color: $text;
+              // color: $text;
             }
           }
         }

@@ -134,8 +134,9 @@ export const actions = {
   },
 
   async getRefList({ commit, state }, data) {
+    let url = data ? (!data.id ? "" : data.id) : "";
     const list = await service.listRef({
-      ...data,
+      url: url,
       currentPage: 1,
       pageSize: 5
     });

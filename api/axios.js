@@ -18,6 +18,8 @@ ax.interceptors.request.use(
     //   config.timeout = 5000
     // }
     config.headers["Domain"] = `http://${SERVER_DOMAIN}:${SERVER_PORT}`;
+    config.headers["Authorization"] =
+      "Basic YWlLbm93bGVkZ2U6cmVhZHBhcGVyX2NvbQ==";
     return config;
   },
   data => {
