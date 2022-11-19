@@ -44,7 +44,7 @@
     "marked": "^0.3.6",
     "node-sass": "^4.14.1",
     "nprogress": "^0.2.0",
-    "nuxt": "^2.3.4"
+    "nuxt": "^2.15.8"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.5.2",
